@@ -2,6 +2,7 @@ package com.uihyun.medic;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -38,16 +40,19 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // Adapter 생성
-        adapter = new ListViewAdapter() ;
+        adapter = new ListViewAdapter();
 
         // 리스트뷰 참조 및 Adapter달기
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
+
         // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // TODO : item click
+                // 결과 페이지로 이동
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -78,7 +83,7 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void hideKeyboard(){
+    private void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
@@ -120,7 +125,6 @@ public class MainActivity extends Activity {
                 os = new DataOutputStream(conn.getOutputStream());
                 os.writeBytes(sbPost.toString());
                 os.flush();
-                os.close();
 
                 is = conn.getInputStream();        //input스트림 개방
 
@@ -205,8 +209,10 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             } finally {
                 try {
-                    os.close();
-                    is.close();
+                    if (os != null)
+                        os.close();
+                    if (is != null)
+                        is.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -224,6 +230,8 @@ public class MainActivity extends Activity {
                 result = medicines.size() + "개의 결과가 검색되었습니다.";
             else
                 result = "검색된 결과가 없습니다.";
+
+            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
             listView.setSelectionAfterHeaderView();
         }
