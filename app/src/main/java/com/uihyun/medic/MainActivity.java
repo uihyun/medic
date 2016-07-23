@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // XXX Test Commit
+
         // Adapter 생성
         adapter = new ListViewAdapter();
 
