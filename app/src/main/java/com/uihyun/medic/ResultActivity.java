@@ -1,13 +1,218 @@
 package com.uihyun.medic;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResultActivity extends Activity {
+
+    private AsyncPostData asyncPostData;
+    private Medicine medicine;
+    private ImageView guideImage0;
+    private ImageView guideImage1;
+    private ImageView guideImage2;
+    private ImageView guideImage3;
+    private ImageView guideImage4;
+    private ImageView guideImage5;
+    private ImageView guideImage6;
+    private ImageView guideImage7;
+    private ImageView guideImage8;
+    private TextView guideWhatContent;
+    private TextView guideHowContent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        Intent intent = getIntent();
+        medicine = (Medicine) intent.getSerializableExtra("medicine");
+
+        guideImage0 = (ImageView) findViewById(R.id.guide_0);
+        guideImage1 = (ImageView) findViewById(R.id.guide_1);
+        guideImage2 = (ImageView) findViewById(R.id.guide_2);
+        guideImage3 = (ImageView) findViewById(R.id.guide_3);
+        guideImage4 = (ImageView) findViewById(R.id.guide_4);
+        guideImage5 = (ImageView) findViewById(R.id.guide_5);
+        guideImage6 = (ImageView) findViewById(R.id.guide_6);
+        guideImage7 = (ImageView) findViewById(R.id.guide_7);
+
+        guideWhatContent = (TextView) findViewById(R.id.guide_what_content);
+        guideHowContent = (TextView) findViewById(R.id.guide_how_content);
+
+        asyncPostData = new AsyncPostData(getApplicationContext(), medicine);
+        asyncPostData.execute();
+    }
+
+    public class AsyncPostData extends AsyncTask<Void, Void, Void> {
+        private String strUrl;
+        private String resultWhat;
+        private String resultHow;
+        private Context context;
+        private Medicine medicine;
+        private List<Bitmap> bitmaps;
+
+        public AsyncPostData(Context context, Medicine medicine) {
+            this.context = context;
+            this.medicine = medicine;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            strUrl = "http://www.health.kr/drug_info/basedrug/" + medicine.getDetailLink();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            InputStream is = null;
+            bitmaps = new ArrayList<Bitmap>();
+            try {
+                URL url = new URL(strUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST"); // post방식 통신
+                conn.setDoOutput(true);       // 쓰기모드 지정
+                conn.setDoInput(true);        // 읽기모드 지정
+                conn.setUseCaches(false);     // 캐싱데이터를 받을지 안받을지
+                conn.setDefaultUseCaches(false); // 캐싱데이터 디폴트 값 설정
+
+                is = conn.getInputStream();        //input스트림 개방
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, "EUC-KR"));  //문자열 셋 세팅
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    if (line.contains("medi_guide")) {
+                        line = line.substring(line.indexOf("medi_"));
+                        medicine.setGuideLink(line.substring(0, line.indexOf("COORDS") - 2));
+                        strUrl = "http://www.health.kr/drug_info/basedrug/" + medicine.getGuideLink();
+                        break;
+                    }
+                }
+
+                url = new URL(strUrl);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST"); // post방식 통신
+                conn.setDoOutput(true);       // 쓰기모드 지정
+                conn.setDoInput(true);        // 읽기모드 지정
+                conn.setUseCaches(false);     // 캐싱데이터를 받을지 안받을지
+                conn.setDefaultUseCaches(false); // 캐싱데이터 디폴트 값 설정
+
+                is = conn.getInputStream();        //input스트림 개방
+
+                br = new BufferedReader(new InputStreamReader(is, "EUC-KR"));  //문자열 셋 세팅
+
+                while ((line = br.readLine()) != null) {
+                    if (line.contains("li style")) {
+                        if (line.contains("images")) {
+                            line = line.substring(line.indexOf("images") - 1, line.indexOf("alt") - 2);
+                            URL imageUrl = new URL("http://www.health.kr" + line);
+                            bitmaps.add(BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream()));
+                        }
+                    } else if (line.contains("1. 이 약은 무슨")){
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        line = br.readLine();
+                        line = line.substring(line.indexOf("<td>") + 4);
+                        if (line.indexOf("</td>") > -1)
+                            line = line.substring(0, line.indexOf("</td>"));
+                        if (line.indexOf("\t") > -1)
+                            line.replaceAll("\t", "");
+                        if (line.indexOf("<br>") > -1)
+                            line.replaceAll("<br>", "\n");
+                        resultWhat = line;
+                    } else if (line.contains("2. 이 약은 어떻게")){
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        line = br.readLine();
+                        line = line.substring(line.indexOf("<td>") + 4);
+                        if (line.indexOf("</td>") > -1)
+                            line = line.substring(0, line.indexOf("</td>"));
+                        if (line.indexOf("\t") > -1)
+                            line.replaceAll("\t", "");
+                        if (line.indexOf("<br>") > -1)
+                            line.replaceAll("<br>", "\n");
+                        resultHow = line;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (is != null)
+                        is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            System.out.println(resultWhat);
+            System.out.println(resultHow);
+
+            for (int i=0; i < bitmaps.size(); i++) {
+                switch (i) {
+                    case 0:
+                        guideImage0.setImageBitmap(bitmaps.get(0));
+                        break;
+                    case 1:
+                        guideImage1.setImageBitmap(bitmaps.get(1));
+                        break;
+                    case 2:
+                        guideImage2.setImageBitmap(bitmaps.get(2));
+                        break;
+                    case 3:
+                        guideImage3.setImageBitmap(bitmaps.get(3));
+                        break;
+                    case 4:
+                        guideImage4.setImageBitmap(bitmaps.get(4));
+                        break;
+                    case 5:
+                        guideImage5.setImageBitmap(bitmaps.get(5));
+                        break;
+                    case 6:
+                        guideImage6.setImageBitmap(bitmaps.get(6));
+                        break;
+                    case 7:
+                        guideImage7.setImageBitmap(bitmaps.get(7));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            guideImage0.setImageBitmap(bitmaps.get(0));
+            guideImage1.setImageBitmap(bitmaps.get(1));
+            guideImage2.setImageBitmap(bitmaps.get(2));
+
+            guideWhatContent.setText(resultWhat);
+            guideHowContent.setText(resultHow);
+        }
     }
 }

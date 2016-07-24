@@ -20,6 +20,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -33,13 +34,12 @@ public class MainActivity extends Activity {
     private EditText searchText;
     private ListView listView;
     private AsyncPostData asyncPostData;
+    protected List<Medicine> medicines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // XXX Test Commit
 
         // Adapter 생성
         adapter = new ListViewAdapter();
@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // 결과 페이지로 이동
                 Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra("medicine", (Serializable) medicines.get(position));
                 startActivity(intent);
             }
         });
@@ -94,7 +95,6 @@ public class MainActivity extends Activity {
         private String strUrl;
         private String result;
         private Context context;
-        private List<Medicine> medicines;
 
         public AsyncPostData(Context context) {
             this.context = context;
@@ -110,6 +110,7 @@ public class MainActivity extends Activity {
         protected Void doInBackground(Void... voids) {
             DataOutputStream os = null;
             InputStream is = null;
+            medicines = new ArrayList<>();
             try {
                 URL url = new URL(strUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -132,11 +133,16 @@ public class MainActivity extends Activity {
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(is, "EUC-KR"));  //문자열 셋 세팅
                 String line;
-                medicines = new ArrayList<>();
+                String hrefLine = null;
+
 
                 while ((line = br.readLine()) != null) {
                     if (line.contains("<font color='red'>" + enteredText)) {
                         Medicine medicine = new Medicine();
+                        // 링크
+                        hrefLine = line.substring(line.indexOf("show_"), line.indexOf('>', line.indexOf('>') + 1) - 1);
+                        medicine.setDetailLink(hrefLine);
+
                         // 제품명
                         line = line.substring(line.indexOf('>', line.indexOf('>') + 1) + 1, line.indexOf("</A>"));
                         line = line.replaceAll("<font color='red'>", "").replaceAll("</font>", "");

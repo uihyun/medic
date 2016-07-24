@@ -1,9 +1,11 @@
 package com.uihyun.medic;
 
+import java.io.Serializable;
+
 /**
  * Created by Uihyun on 2016. 5. 24..
  */
-public class Medicine {
+public class Medicine implements Serializable {
     private String name;
     private String ingredient;
     private String company;
@@ -13,6 +15,8 @@ public class Medicine {
     private String classification;
     private String insurance;
     private String imageUrl;
+    private String detailLink;
+    private String guideLink;
 
     public String getImageUrl() {
         return imageUrl;
@@ -84,5 +88,21 @@ public class Medicine {
 
     public void setInsurance(String insurance) {
         this.insurance = insurance;
+    }
+
+    public String getDetailLink() {
+        return detailLink;
+    }
+
+    public void setDetailLink(String detailLink) {
+        this.detailLink = detailLink;
+    }
+
+    public String getGuideLink() {
+        return guideLink;
+    }
+
+    public void setGuideLink(String guideLink) {
+        this.guideLink = guideLink;
     }
 }

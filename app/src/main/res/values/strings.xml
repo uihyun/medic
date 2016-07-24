@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">medic</string>
     <string name="title_activity_result_activitye">Result</string>
+    <string name="guide_what">what</string>
+    <string name="guide_how">how</string>
 </resources>
