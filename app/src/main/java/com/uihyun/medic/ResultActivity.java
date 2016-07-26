@@ -23,6 +23,11 @@ public class ResultActivity extends Activity {
 
     private AsyncPostData asyncPostData;
     private Medicine medicine;
+
+    private TextView nameTextView;
+    private TextView descTextView;
+    private ImageView resultImageView;
+
     private ImageView guideImage0;
     private ImageView guideImage1;
     private ImageView guideImage2;
@@ -31,10 +36,11 @@ public class ResultActivity extends Activity {
     private ImageView guideImage5;
     private ImageView guideImage6;
     private ImageView guideImage7;
-    private ImageView guideImage8;
-    private TextView guideWhatContent;
-    private TextView guideHowContent;
 
+    private TextView guideWhat;
+    private TextView guideWhatContent;
+    private TextView guideHow;
+    private TextView guideHowContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,10 @@ public class ResultActivity extends Activity {
 
         Intent intent = getIntent();
         medicine = (Medicine) intent.getSerializableExtra("medicine");
+
+        nameTextView = (TextView) findViewById(R.id.result_name);
+        descTextView = (TextView) findViewById(R.id.result_desc);
+        resultImageView = (ImageView) findViewById(R.id.result_image);
 
         guideImage0 = (ImageView) findViewById(R.id.guide_0);
         guideImage1 = (ImageView) findViewById(R.id.guide_1);
@@ -53,7 +63,9 @@ public class ResultActivity extends Activity {
         guideImage6 = (ImageView) findViewById(R.id.guide_6);
         guideImage7 = (ImageView) findViewById(R.id.guide_7);
 
+        guideWhat = (TextView) findViewById(R.id.guide_what);
         guideWhatContent = (TextView) findViewById(R.id.guide_what_content);
+        guideHow = (TextView) findViewById(R.id.guide_how);
         guideHowContent = (TextView) findViewById(R.id.guide_how_content);
 
         asyncPostData = new AsyncPostData(getApplicationContext(), medicine);
@@ -62,10 +74,11 @@ public class ResultActivity extends Activity {
 
     public class AsyncPostData extends AsyncTask<Void, Void, Void> {
         private String strUrl;
-        private String resultWhat;
-        private String resultHow;
+        private String resultWhatContent;
+        private String resultHowContent;
         private Context context;
         private Medicine medicine;
+        private Bitmap bitmapMainImage;
         private List<Bitmap> bitmaps;
 
         public AsyncPostData(Context context, Medicine medicine) {
@@ -81,9 +94,17 @@ public class ResultActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+
             InputStream is = null;
             bitmaps = new ArrayList<Bitmap>();
             try {
+                if (medicine.getImageUrl() != null) {
+                    URL imageUrl = new URL(medicine.getImageUrl());
+                    bitmapMainImage = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+                } else {
+//                resultImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), getResources().getDrawable(R.drawable.no_image)));
+                }
+
                 URL url = new URL(strUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST"); // post방식 통신
@@ -125,7 +146,7 @@ public class ResultActivity extends Activity {
                             URL imageUrl = new URL("http://www.health.kr" + line);
                             bitmaps.add(BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream()));
                         }
-                    } else if (line.contains("1. 이 약은 무슨")){
+                    } else if (line.contains("1. 이 약은 무슨")) {
                         br.readLine();
                         br.readLine();
                         br.readLine();
@@ -135,11 +156,11 @@ public class ResultActivity extends Activity {
                         if (line.indexOf("</td>") > -1)
                             line = line.substring(0, line.indexOf("</td>"));
                         if (line.indexOf("\t") > -1)
-                            line.replaceAll("\t", "");
+                            line = line.replaceAll("\t", "");
                         if (line.indexOf("<br>") > -1)
-                            line.replaceAll("<br>", "\n");
-                        resultWhat = line;
-                    } else if (line.contains("2. 이 약은 어떻게")){
+                            line = line.replaceAll("<br>", "\n");
+                        resultWhatContent = line;
+                    } else if (line.contains("2. 이 약은 어떻게")) {
                         br.readLine();
                         br.readLine();
                         br.readLine();
@@ -150,10 +171,10 @@ public class ResultActivity extends Activity {
                         if (line.indexOf("</td>") > -1)
                             line = line.substring(0, line.indexOf("</td>"));
                         if (line.indexOf("\t") > -1)
-                            line.replaceAll("\t", "");
+                            line = line.replaceAll("\t", "");
                         if (line.indexOf("<br>") > -1)
-                            line.replaceAll("<br>", "\n");
-                        resultHow = line;
+                            line = line.replaceAll("<br>", "\n");
+                        resultHowContent = line;
                     }
                 }
             } catch (Exception e) {
@@ -173,10 +194,12 @@ public class ResultActivity extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            System.out.println(resultWhat);
-            System.out.println(resultHow);
 
-            for (int i=0; i < bitmaps.size(); i++) {
+            nameTextView.setText(medicine.getName());
+            descTextView.setText(medicine.getIngredient());
+            resultImageView.setImageBitmap(bitmapMainImage);
+
+            for (int i = 0; i < bitmaps.size(); i++) {
                 switch (i) {
                     case 0:
                         guideImage0.setImageBitmap(bitmaps.get(0));
@@ -211,8 +234,10 @@ public class ResultActivity extends Activity {
             guideImage1.setImageBitmap(bitmaps.get(1));
             guideImage2.setImageBitmap(bitmaps.get(2));
 
-            guideWhatContent.setText(resultWhat);
-            guideHowContent.setText(resultHow);
+            guideWhat.setText(R.string.guide_what);
+            guideWhatContent.setText(resultWhatContent);
+            guideHow.setText(R.string.guide_how);
+            guideHowContent.setText(resultHowContent);
         }
     }
 }

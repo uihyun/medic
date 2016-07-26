@@ -27,7 +27,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class IndgActivity extends Activity {
 
     private String enteredText;
     private ListViewAdapter adapter;
@@ -39,13 +39,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_indg);
 
         // Adapter 생성
         adapter = new ListViewAdapter();
 
         // 리스트뷰 참조 및 Adapter달기
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.list_view_indg);
         listView.setAdapter(adapter);
 
         // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
@@ -121,8 +121,8 @@ public class MainActivity extends Activity {
                 conn.setDefaultUseCaches(false); // 캐싱데이터 디폴트 값 설정
 
                 StringBuffer sbPost = new StringBuffer();
-                sbPost.append("drug_name").append("=").append(URLEncoder.encode(enteredText, "EUC-KR")).append("&");
-                sbPost.append("sunb_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
+                sbPost.append("drug_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
+                sbPost.append("sunb_name").append("=").append(URLEncoder.encode(enteredText, "EUC-KR")).append("&");
                 sbPost.append("firm_name").append("=").append(URLEncoder.encode("", "EUC-KR"));
 
                 os = new DataOutputStream(conn.getOutputStream());
@@ -206,7 +206,7 @@ public class MainActivity extends Activity {
                         }
 
                         medicines.add(medicine);
-                        adapter.addItem(image, medicine.getName(), medicine.getIngredient());
+                        adapter.addItem(image, medicine.getName(), medicine.getIngredient() + "\n");
                     }
                 }
             } catch (Exception e) {

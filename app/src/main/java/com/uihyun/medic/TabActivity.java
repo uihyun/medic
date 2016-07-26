@@ -48,7 +48,7 @@ public class TabActivity extends Activity {
         spec = tabHost.newTabSpec(TAB_HOME).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_home_selector));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec(TAB_SEARCH).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_map_selector));
+        spec = tabHost.newTabSpec(TAB_SEARCH).setContent(new Intent(this, IndgActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_map_selector));
         tabHost.addTab(spec);
 
         spec = tabHost.newTabSpec(TAB_MY).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_my_selector));
