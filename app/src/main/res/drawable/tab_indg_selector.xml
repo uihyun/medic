@@ -3,9 +3,9 @@
     <!-- when selected -->
     <item
         android:state_selected="true"
-        android:drawable="@drawable/tab_selected_map" />
+        android:drawable="@drawable/tab_selected_indg" />
     <!-- when not selected -->
     <item
         android:state_selected="false"
-        android:drawable="@drawable/tab_map" />
+        android:drawable="@drawable/tab_selected_indg" />
 </selector>

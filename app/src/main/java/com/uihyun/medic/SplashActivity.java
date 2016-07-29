@@ -14,7 +14,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         ImageView imageView = (ImageView) findViewById(R.id.splash);
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.parmacy));
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.splash));
 
         Handler hd = new Handler();
         hd.postDelayed(new splashHandler(), 2000); // 3초 후에 Handler 실행

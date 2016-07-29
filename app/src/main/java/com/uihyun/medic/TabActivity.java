@@ -45,22 +45,36 @@ public class TabActivity extends Activity {
     public void initializeTabs() {
         TabHost.TabSpec spec;
 
-        spec = tabHost.newTabSpec(TAB_HOME).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_home_selector));
+        spec = tabHost.newTabSpec(TAB_HOME).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_name_selector));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec(TAB_SEARCH).setContent(new Intent(this, IndgActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_map_selector));
+        spec = tabHost.newTabSpec(TAB_SEARCH).setContent(new Intent(this, IndgActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_indg_selector));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec(TAB_MY).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_my_selector));
+        spec = tabHost.newTabSpec(TAB_MY).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_shape_selector));
         tabHost.addTab(spec);
 
         setTabColor(tabHost);
+        setTabAction(tabHost);
     }
 
     private void setTabColor(TabHost tabHost) {
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
+        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#F0F0F0"));
+    }
+
+    private void setTabAction(final TabHost tabHost) {
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            public void onTabChanged(String arg) {
+                // tab select action
+                for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#F0F0F0"));
+            }
+        });
     }
 
     @Override

@@ -3,9 +3,9 @@
     <!-- when selected -->
     <item
         android:state_selected="true"
-        android:drawable="@drawable/tab_selected_home" />
+        android:drawable="@drawable/tab_selected_name" />
     <!-- when not selected -->
     <item
         android:state_selected="false"
-        android:drawable="@drawable/tab_home" />
+        android:drawable="@drawable/tab_selected_name" />
 </selector>
