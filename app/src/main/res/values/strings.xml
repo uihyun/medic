@@ -2,6 +2,7 @@
     <string name="app_name">medic</string>
     <string name="search_hint_name">제품명을 입력하세요</string>
     <string name="search_hint_indg">성분명을 입력하세요</string>
+    <string name="search_hint_shape">문자를 입력하세요</string>
     <string name="guide_what">무슨 약일까요?</string>
     <string name="guide_how">어떻게 복용할까요?</string>
 </resources>
