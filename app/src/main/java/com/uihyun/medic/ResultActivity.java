@@ -80,6 +80,7 @@ public class ResultActivity extends Activity {
         private Medicine medicine;
         private Bitmap bitmapMainImage;
         private List<Bitmap> bitmaps;
+        private CustomProgressDialog progressDialog;
 
         public AsyncPostData(Context context, Medicine medicine) {
             this.context = context;
@@ -89,6 +90,7 @@ public class ResultActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = CustomProgressDialog.show(context, "", false, null);
             strUrl = "http://www.health.kr/drug_info/basedrug/" + medicine.getDetailLink();
         }
 
@@ -194,6 +196,8 @@ public class ResultActivity extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            progressDialog.dismiss();
 
             nameTextView.setText(medicine.getName());
             descTextView.setText(medicine.getIngredient());

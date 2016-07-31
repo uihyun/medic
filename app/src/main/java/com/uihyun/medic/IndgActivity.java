@@ -95,6 +95,7 @@ public class IndgActivity extends Activity {
         private String strUrl;
         private String result;
         private Context context;
+        private CustomProgressDialog progressDialog;
 
         public AsyncPostData(Context context) {
             this.context = context;
@@ -103,6 +104,7 @@ public class IndgActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = CustomProgressDialog.show(context, "", false, null);
             strUrl = "http://www.health.kr/drug_info/basedrug/list.asp";
         }
 
@@ -228,7 +230,8 @@ public class IndgActivity extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            System.out.println(result);
+
+            progressDialog.dismiss();
 
             if (medicines.size() > 0)
                 result = medicines.size() + "개의 결과가 검색되었습니다.";
