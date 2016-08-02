@@ -68,7 +68,7 @@ public class ResultActivity extends Activity {
         guideHow = (TextView) findViewById(R.id.guide_how);
         guideHowContent = (TextView) findViewById(R.id.guide_how_content);
 
-        asyncPostData = new AsyncPostData(getApplicationContext(), medicine);
+        asyncPostData = new AsyncPostData(this, medicine);
         asyncPostData.execute();
     }
 
