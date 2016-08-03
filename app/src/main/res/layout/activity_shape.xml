@@ -14,7 +14,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:id="@+id/spinner_type" />
 
     <Spinner
@@ -23,7 +22,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:id="@+id/spinner_color" />
 
     <Spinner
@@ -32,7 +30,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:id="@+id/spinner_shape" />
 
     <Spinner
@@ -41,7 +38,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:id="@+id/spinner_line" />
 
     <EditText
@@ -52,13 +48,21 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:hint="@string/search_hint_shape"
         android:imeOptions="actionSearch" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_search"
+        android:id="@+id/button_search"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:id="@+id/list_view_shape" />
 
 </LinearLayout>

@@ -135,8 +135,7 @@ public class MainActivity extends Activity {
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(is, "EUC-KR"));  //문자열 셋 세팅
                 String line;
-                String hrefLine = null;
-
+                String hrefLine;
 
                 while ((line = br.readLine()) != null) {
                     if (line.contains("<font color='red'>" + enteredText)) {
@@ -199,7 +198,7 @@ public class MainActivity extends Activity {
                         line = br.readLine();
                         if (line.contains("sbcode")) {
                             line = line.substring(line.indexOf("sbcode") + 7, line.indexOf("class") - 2);
-                            line = "http://www.pharm.or.kr/images/sb_photo//big3/" + line + ".jpg";
+                            line = "http://www.pharm.or.kr/images/sb_photo/big3/" + line + ".jpg";
                             medicine.setImageUrl(line);
                             URL imageUrl = new URL(medicine.getImageUrl());
                             image = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());

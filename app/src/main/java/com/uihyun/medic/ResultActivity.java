@@ -234,10 +234,6 @@ public class ResultActivity extends Activity {
                 }
             }
 
-            guideImage0.setImageBitmap(bitmaps.get(0));
-            guideImage1.setImageBitmap(bitmaps.get(1));
-            guideImage2.setImageBitmap(bitmaps.get(2));
-
             guideWhat.setText(R.string.guide_what);
             guideWhatContent.setText(resultWhatContent);
             guideHow.setText(R.string.guide_how);
