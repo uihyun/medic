@@ -296,7 +296,7 @@ public class ShapeActivity extends Activity {
             listView.setSelectionAfterHeaderView();
 
             if (pageNum != 1)
-                listView.setSelection(listView.getCount() - 1);
+                listView.setSelection(listView.getCount());
         }
     }
 }
