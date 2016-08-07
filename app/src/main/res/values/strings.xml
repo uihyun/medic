@@ -6,4 +6,8 @@
     <string name="guide_what">무슨 약일까요?</string>
     <string name="guide_how">어떻게 복용할까요?</string>
     <string name="button_search">찾기</string>
+    <string name="prompt_type">제형을 선택하세요</string>
+    <string name="prompt_color">색을 선택하세요</string>
+    <string name="prompt_shape">모양을 선택하세요</string>
+    <string name="prompt_line">분할선을 선택하세요</string>
 </resources>

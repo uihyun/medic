@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -47,6 +48,7 @@ public class ShapeActivity extends Activity {
     private String enteredShape;
     private String enteredLine;
     private String enteredText;
+    private int pageNum = 1;
 
     private String[] types = {"정제류", "경질캡슐", "연질캡슐", "기타"};
     private String[] colors = {"하양", "노랑", "주황", "분홍", "빨강", "갈색", "연두", "초록", "청록", "파랑", "남색", "자주", "회색", "검정", "투명"};
@@ -72,21 +74,25 @@ public class ShapeActivity extends Activity {
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         typeSpinner.setAdapter(typeAdapter);
+        typeSpinner.setPrompt(getString(R.string.prompt_type));
 
         ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, colors);
         colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colorSpinner.setAdapter(colorAdapter);
+        colorSpinner.setPrompt(getString(R.string.prompt_color));
 
         ArrayAdapter<String> shapeAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, shapes);
         shapeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         shapeSpinner.setAdapter(shapeAdapter);
+        shapeSpinner.setPrompt(getString(R.string.prompt_shape));
 
         ArrayAdapter<String> lineAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, lines);
         lineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lineSpinner.setAdapter(lineAdapter);
+        lineSpinner.setPrompt(getString(R.string.prompt_line));
 
         // Adapter 생성
         adapter = new ListViewAdapter();
@@ -99,10 +105,28 @@ public class ShapeActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // 결과 페이지로 이동
-                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-                intent.putExtra("medicine", (Serializable) medicines.get(position));
-                startActivity(intent);
+                if (medicines.size() > position) {
+                    // 결과 페이지로 이동
+                    Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                    intent.putExtra("medicine", (Serializable) medicines.get(position));
+                    startActivity(intent);
+                } else {
+                    adapter.removeListViewItem(position);
+                    hideKeyboard();
+                    enteredType = typeSpinner.getSelectedItem().toString();
+                    if (enteredType.equals("정제류"))
+                        enteredType = "on, 나정, 필름코팅정, 설하정, 붕해(현탁)정, 당의정, 다층정, 저작정, 트로키정, 좌제";
+                    enteredColor = colorSpinner.getSelectedItem().toString();
+                    enteredShape = shapeSpinner.getSelectedItem().toString();
+                    enteredLine = lineSpinner.getSelectedItem().toString();
+                    if (enteredLine.equals("없음"))
+                        enteredLine = "";
+                    enteredText = searchText.getText().toString();
+                    pageNum = pageNum + 1;
+
+                    asyncPostData = new AsyncPostData(v.getContext());
+                    asyncPostData.execute();
+                }
             }
         });
 
@@ -110,23 +134,27 @@ public class ShapeActivity extends Activity {
         searchButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (adapter.getCount() != 0)
-                    adapter.removeListViewItems();
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (adapter.getCount() != 0)
+                        adapter.removeListViewItems();
 
-                hideKeyboard();
-                enteredType = typeSpinner.getSelectedItem().toString();
-                if (enteredType.equals("정제류"))
-                    enteredType = "on, 나정, 필름코팅정, 설하정, 붕해(현탁)정, 당의정, 다층정, 저작정, 트로키정, 좌제";
-                enteredColor = colorSpinner.getSelectedItem().toString();
-                enteredShape = shapeSpinner.getSelectedItem().toString();
-                enteredLine = lineSpinner.getSelectedItem().toString();
-                if (enteredLine.equals("없음"))
-                    enteredLine = "";
-                enteredText = searchText.getText().toString();
+                    hideKeyboard();
+                    enteredType = typeSpinner.getSelectedItem().toString();
+                    if (enteredType.equals("정제류"))
+                        enteredType = "on, 나정, 필름코팅정, 설하정, 붕해(현탁)정, 당의정, 다층정, 저작정, 트로키정, 좌제";
+                    enteredColor = colorSpinner.getSelectedItem().toString();
+                    enteredShape = shapeSpinner.getSelectedItem().toString();
+                    enteredLine = lineSpinner.getSelectedItem().toString();
+                    if (enteredLine.equals("없음"))
+                        enteredLine = "";
+                    enteredText = searchText.getText().toString();
+                    pageNum = 1;
 
-                asyncPostData = new AsyncPostData(v.getContext());
-                asyncPostData.execute();
-                return true;
+                    asyncPostData = new AsyncPostData(v.getContext());
+                    asyncPostData.execute();
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -141,6 +169,7 @@ public class ShapeActivity extends Activity {
         private String result;
         private Context context;
         private CustomProgressDialog progressDialog;
+        private boolean hasNextPage;
 
         public AsyncPostData(Context context) {
             this.context = context;
@@ -174,7 +203,7 @@ public class ShapeActivity extends Activity {
                 sbPost.append("drug_color").append("=").append(URLEncoder.encode(enteredColor, "EUC-KR")).append("&");
                 sbPost.append("drug_shape").append("=").append(URLEncoder.encode(enteredShape, "EUC-KR")).append("&");
                 sbPost.append("drug_line").append("=").append(URLEncoder.encode(enteredLine, "EUC-KR")).append("&");
-                sbPost.append("_page").append("=").append(URLEncoder.encode("1", "EUC-KR"));
+                sbPost.append("_page").append("=").append(URLEncoder.encode(Integer.toString(pageNum), "EUC-KR"));
 
                 os = new DataOutputStream(conn.getOutputStream());
                 os.writeBytes(sbPost.toString());
@@ -196,8 +225,8 @@ public class ShapeActivity extends Activity {
 
                         // 이미지
                         Bitmap image = null;
-                        line = br.readLine();
-                        line = br.readLine();
+                        br.readLine();
+                        br.readLine();
                         line = br.readLine();
                         if (line.contains("sbcode")) {
                             line = line.substring(line.indexOf("sbcode") + 7, line.indexOf("class") - 2);
@@ -224,6 +253,9 @@ public class ShapeActivity extends Activity {
                         medicines.add(medicine);
                         adapter.addItem(image, medicine.getName(), medicine.getIngredient());
                     }
+
+                    if (line.contains("_page"))
+                        hasNextPage = true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -238,6 +270,9 @@ public class ShapeActivity extends Activity {
                 }
             }
 
+            if (hasNextPage)
+                adapter.addItem(null, "더 보기", null);
+
             return null;
         }
 
@@ -248,11 +283,20 @@ public class ShapeActivity extends Activity {
             progressDialog.dismiss();
 
             if (medicines.size() > 0) {
-                result = medicines.size() + "개의 결과가 검색되었습니다.";
-                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                if (hasNextPage)
+                    result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
+                else
+                    result = medicines.size() + "개의 결과가 검색되었습니다.";
             }
+            else
+                result = "검색된 결과가 없습니다.";
+
+            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
             listView.setSelectionAfterHeaderView();
+
+            if (pageNum != 1)
+                listView.setSelection(listView.getCount() - 1);
         }
     }
 }
