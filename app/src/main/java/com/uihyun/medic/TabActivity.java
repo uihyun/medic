@@ -54,6 +54,9 @@ public class TabActivity extends Activity {
         spec = tabHost.newTabSpec(TAB_MY).setContent(new Intent(this, ShapeActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_shape_selector));
         tabHost.addTab(spec);
 
+        spec = tabHost.newTabSpec(TAB_MY).setContent(new Intent(this, AboutActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_about_selected));
+        tabHost.addTab(spec);
+
         setTabColor(tabHost);
         setTabAction(tabHost);
     }

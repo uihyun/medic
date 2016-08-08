@@ -10,4 +10,8 @@
     <string name="prompt_color">색을 선택하세요</string>
     <string name="prompt_shape">모양을 선택하세요</string>
     <string name="prompt_line">분할선을 선택하세요</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="about_info">이 앱은 룰루랄라 앱입니다.</string>
+    <string name="about_feedback">이메일 주소데스.\n나한테 연락주이소.</string>
 </resources>
