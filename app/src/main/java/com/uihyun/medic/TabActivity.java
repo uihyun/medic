@@ -15,47 +15,17 @@ import android.widget.TabHost;
 public class TabActivity extends Activity {
 
     private static final String CURRENT_TAB = "CURRENT_TAB";
-    private static final String TAB_HOME = "TAB_HOME";
-    private static final String TAB_SEARCH = "TAB_MAP";
-    private static final String TAB_MY = "TAB_MY";
+    private static final String TAB_NAME = "TAB_NAME";
+    private static final String TAB_INDG = "TAB_INDG";
+    private static final String TAB_SHAPE = "TAB_SHAPE";
+    private static final String TAB_FAVORITE = "TAB_FAVORITE";
+    private static final String TAB_ABOUT = "TAB_ABOUT";
 
     private static final int SWIPE_MIN_DISTANCE = 120;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
     private TabHost tabHost;
-    private LocalActivityManager mLocalActivityManager;
-    private String currentTab;
-    private GestureDetector gestureScanner;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab);
-
-        tabHost = (TabHost) findViewById(android.R.id.tabhost);
-        mLocalActivityManager = new LocalActivityManager(this, false);
-        mLocalActivityManager.dispatchCreate(savedInstanceState);
-        tabHost.setup(mLocalActivityManager);
-
-        if (savedInstanceState != null) {
-            // load current tab
-            currentTab = savedInstanceState.getString(CURRENT_TAB);
-            initializeTabs();
-            tabHost.setCurrentTabByTag(currentTab);
-        } else {
-            initializeTabs();
-            tabHost.setCurrentTab(0);
-        }
-
-        gestureScanner = new GestureDetector(this, mGestureListener);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return gestureScanner.onTouchEvent(event);
-    }
-
     public GestureDetector.OnGestureListener mGestureListener = new GestureDetector.OnGestureListener() {
 
         @Override
@@ -90,7 +60,7 @@ public class TabActivity extends Activity {
                 }
             } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                 // left swipe
-                if (tabHost.getCurrentTab()  > 0) {
+                if (tabHost.getCurrentTab() > 0) {
                     tabHost.setCurrentTab(tabHost.getCurrentTab() - 1);
                     return true;
                 }
@@ -103,19 +73,54 @@ public class TabActivity extends Activity {
             return false;
         }
     };
+    private LocalActivityManager mLocalActivityManager;
+    private String currentTab;
+    private GestureDetector gestureScanner;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tab);
+
+        tabHost = (TabHost) findViewById(android.R.id.tabhost);
+        mLocalActivityManager = new LocalActivityManager(this, false);
+        mLocalActivityManager.dispatchCreate(savedInstanceState);
+        tabHost.setup(mLocalActivityManager);
+
+        if (savedInstanceState != null) {
+            // load current tab
+            currentTab = savedInstanceState.getString(CURRENT_TAB);
+            initializeTabs();
+            tabHost.setCurrentTabByTag(currentTab);
+        } else {
+            initializeTabs();
+            tabHost.setCurrentTab(0);
+        }
+
+        gestureScanner = new GestureDetector(this, mGestureListener);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureScanner.onTouchEvent(event);
+    }
+
     public void initializeTabs() {
         TabHost.TabSpec spec;
 
-        spec = tabHost.newTabSpec(TAB_HOME).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_name_selector));
+        spec = tabHost.newTabSpec(TAB_NAME).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_name_selector));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec(TAB_SEARCH).setContent(new Intent(this, IndgActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_indg_selector));
+        spec = tabHost.newTabSpec(TAB_INDG).setContent(new Intent(this, IndgActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_indg_selector));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec(TAB_MY).setContent(new Intent(this, ShapeActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_shape_selector));
+        spec = tabHost.newTabSpec(TAB_SHAPE).setContent(new Intent(this, ShapeActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_shape_selector));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec(TAB_MY).setContent(new Intent(this, AboutActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_about_selected));
+        spec = tabHost.newTabSpec(TAB_FAVORITE).setContent(new Intent(this, FavoriteActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_favorite_selector));
+        tabHost.addTab(spec);
+
+        spec = tabHost.newTabSpec(TAB_ABOUT).setContent(new Intent(this, AboutActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_about_selected));
         tabHost.addTab(spec);
 
         setTabColor(tabHost);
