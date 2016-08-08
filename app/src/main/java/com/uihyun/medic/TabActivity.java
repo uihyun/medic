@@ -5,6 +5,8 @@ import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.widget.TabHost;
 
 /**
@@ -16,9 +18,15 @@ public class TabActivity extends Activity {
     private static final String TAB_HOME = "TAB_HOME";
     private static final String TAB_SEARCH = "TAB_MAP";
     private static final String TAB_MY = "TAB_MY";
+
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
     private TabHost tabHost;
     private LocalActivityManager mLocalActivityManager;
     private String currentTab;
+    private GestureDetector gestureScanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +48,61 @@ public class TabActivity extends Activity {
             tabHost.setCurrentTab(0);
         }
 
+        gestureScanner = new GestureDetector(this, mGestureListener);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureScanner.onTouchEvent(event);
+    }
+
+    public GestureDetector.OnGestureListener mGestureListener = new GestureDetector.OnGestureListener() {
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                                float distanceY) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                return false;
+            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                // right swipe
+                if (tabHost.getCurrentTab() < tabHost.getTabWidget().getChildCount()) {
+                    tabHost.setCurrentTab(tabHost.getCurrentTab() + 1);
+                    return true;
+                }
+            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                // left swipe
+                if (tabHost.getCurrentTab()  > 0) {
+                    tabHost.setCurrentTab(tabHost.getCurrentTab() - 1);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return false;
+        }
+    };
     public void initializeTabs() {
         TabHost.TabSpec spec;
 
