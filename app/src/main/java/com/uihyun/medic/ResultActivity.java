@@ -41,6 +41,10 @@ public class ResultActivity extends Activity {
     private TextView guideWhatContent;
     private TextView guideHow;
     private TextView guideHowContent;
+    private TextView guideUsage;
+    private TextView guideUsageContent;
+    private TextView guideStore;
+    private TextView guideStoreContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,10 @@ public class ResultActivity extends Activity {
         guideWhatContent = (TextView) findViewById(R.id.guide_what_content);
         guideHow = (TextView) findViewById(R.id.guide_how);
         guideHowContent = (TextView) findViewById(R.id.guide_how_content);
+        guideUsage = (TextView) findViewById(R.id.guide_usage);
+        guideUsageContent = (TextView) findViewById(R.id.guide_usage_content);
+        guideStore = (TextView) findViewById(R.id.guide_store);
+        guideStoreContent = (TextView) findViewById(R.id.guide_store_content);
 
         asyncPostData = new AsyncPostData(this, medicine);
         asyncPostData.execute();
@@ -74,8 +82,10 @@ public class ResultActivity extends Activity {
 
     public class AsyncPostData extends AsyncTask<Void, Void, Void> {
         private String strUrl;
+        private String resultUsageContent;
         private String resultWhatContent;
         private String resultHowContent;
+        private String resultStoreContent;
         private Context context;
         private Medicine medicine;
         private Bitmap bitmapMainImage;
@@ -125,6 +135,34 @@ public class ResultActivity extends Activity {
                         line = line.substring(line.indexOf("medi_"));
                         medicine.setGuideLink(line.substring(0, line.indexOf("COORDS") - 2));
                         strUrl = "http://www.health.kr/drug_info/basedrug/" + medicine.getGuideLink();
+                    } else if (line.contains("저장방법")) {
+                        line = br.readLine();
+                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+                        medicine.setStore(line);
+                    } else if (line.contains("tabcon_effect") && !line.contains("changeTab")) {
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        line = br.readLine();
+                        line = line.substring(line.indexOf("break-all") + 12, line.lastIndexOf("</td>"));
+                        if (line.indexOf("&nbsp;") > -1)
+                            line = line.replaceAll("&nbsp;", " ");
+                        if (line.indexOf("<br>") > -1)
+                            line = line.replaceAll("<br>", "\n");
+                        medicine.setEffect(line);
+                    } else if (line.contains("tabcon_dosage") && !line.contains("changeTab")) {
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        br.readLine();
+                        line = br.readLine();
+                        line = line.substring(line.indexOf("break-all") + 12, line.lastIndexOf("</td>"));
+                        if (line.indexOf("&nbsp;") > -1)
+                            line = line.replaceAll("&nbsp;", " ");
+                        if (line.indexOf("<br>") > -1)
+                            line = line.replaceAll("<br>", "\n");
+                        medicine.setUsage(line);
                         break;
                     }
                 }
@@ -177,6 +215,7 @@ public class ResultActivity extends Activity {
                         if (line.indexOf("<br>") > -1)
                             line = line.replaceAll("<br>", "\n");
                         resultHowContent = line;
+                        break;
                     }
                 }
             } catch (Exception e) {
@@ -234,10 +273,16 @@ public class ResultActivity extends Activity {
                 }
             }
 
+            guideWhat.setText(R.string.guide_usage);
+            guideWhatContent.setText(resultUsageContent);
             guideWhat.setText(R.string.guide_what);
             guideWhatContent.setText(resultWhatContent);
             guideHow.setText(R.string.guide_how);
             guideHowContent.setText(resultHowContent);
+            guideUsage.setText(R.string.guide_usage);
+            guideUsageContent.setText(medicine.getUsage());
+            guideStore.setText(R.string.guide_store);
+            guideStoreContent.setText(medicine.getStore());
         }
     }
 }

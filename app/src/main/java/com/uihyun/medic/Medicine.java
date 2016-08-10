@@ -17,6 +17,9 @@ public class Medicine implements Serializable {
     private String imageUrl;
     private String detailLink;
     private String guideLink;
+    private String store;
+    private String usage;
+    private String effect;
 
     public String getImageUrl() {
         return imageUrl;
@@ -104,5 +107,29 @@ public class Medicine implements Serializable {
 
     public void setGuideLink(String guideLink) {
         this.guideLink = guideLink;
+    }
+
+    public String getStore() {
+        return store;
+    }
+
+    public void setStore(String store) {
+        this.store = store;
+    }
+
+    public String getUsage() {
+        return usage;
+    }
+
+    public void setUsage(String usage) {
+        this.usage = usage;
+    }
+
+    public String getEffect() {
+        return effect;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
     }
 }

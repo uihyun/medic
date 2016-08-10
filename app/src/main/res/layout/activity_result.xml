@@ -92,6 +92,21 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/guide_usage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#656565"
+            android:layout_marginTop="20dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/guide_usage_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#656565"
+            android:textSize="18dp" />
+
+        <TextView
             android:id="@+id/guide_what"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,6 +131,21 @@
 
         <TextView
             android:id="@+id/guide_how_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#656565"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/guide_store"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#656565"
+            android:layout_marginTop="20dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/guide_store_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#656565"
