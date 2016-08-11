@@ -162,34 +162,34 @@ public class IndgActivity extends Activity {
                         br.readLine();
                         br.readLine();
                         line = br.readLine();
-                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
-                        medicine.setCompany(line);
+//                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+//                        medicine.setCompany(line);
 
                         // 분류
                         br.readLine();
                         line = br.readLine();
-                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
-                        medicine.setClassification(line);
+//                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+//                        medicine.setClassification(line);
 
                         // 투여경로
                         line = br.readLine();
-                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
-                        medicine.setRoute(line);
+//                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+//                        medicine.setRoute(line);
 
                         // 제형
                         line = br.readLine();
-                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
-                        medicine.setType(line);
+//                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+//                        medicine.setType(line);
 
                         // 구분
                         line = br.readLine();
-                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
-                        medicine.setCategory(line);
+//                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+//                        medicine.setCategory(line);
 
                         // 보험
                         line = br.readLine();
-                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
-                        medicine.setInsurance(line);
+//                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+//                        medicine.setInsurance(line);
 
                         // 이미지
                         Bitmap image = null;

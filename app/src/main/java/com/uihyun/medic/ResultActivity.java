@@ -139,27 +139,33 @@ public class ResultActivity extends Activity {
                         line = br.readLine();
                         line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
                         medicine.setStore(line);
-                    } else if (line.contains("tabcon_effect") && !line.contains("changeTab")) {
-                        br.readLine();
-                        br.readLine();
-                        br.readLine();
-                        br.readLine();
-                        line = br.readLine();
-                        line = line.substring(line.indexOf("break-all") + 12, line.lastIndexOf("</td>"));
-                        if (line.indexOf("&nbsp;") > -1)
-                            line = line.replaceAll("&nbsp;", " ");
-                        if (line.indexOf("<br>") > -1)
-                            line = line.replaceAll("<br>", "\n");
-                        medicine.setEffect(line);
+//                    } else if (line.contains("tabcon_effect") && !line.contains("changeTab")) {
+//                        br.readLine();
+//                        br.readLine();
+//                        br.readLine();
+//                        br.readLine();
+//                        line = br.readLine();
+//                        line = line.substring(line.indexOf("break-all") + 12, line.lastIndexOf("</td>"));
+//                        if (line.indexOf("&nbsp;") > -1)
+//                            line = line.replaceAll("&nbsp;", " ");
+//                        if (line.indexOf("<br>") > -1)
+//                            line = line.replaceAll("<br>", "\n");
+//                        medicine.setEffect(line);
                     } else if (line.contains("tabcon_dosage") && !line.contains("changeTab")) {
                         br.readLine();
                         br.readLine();
                         br.readLine();
                         br.readLine();
                         line = br.readLine();
-                        line = line.substring(line.indexOf("break-all") + 12, line.lastIndexOf("</td>"));
+                        line = line.substring(line.indexOf("break-all") + 12);
+                        if (line.indexOf("</td>") > -1)
+                            line = line.substring(0, line.indexOf("</td>"));
+                        if (line.lastIndexOf("<TABLE") > -1)
+                            line = line.substring(0, line.lastIndexOf("<TABLE") - 4);
                         if (line.indexOf("&nbsp;") > -1)
                             line = line.replaceAll("&nbsp;", " ");
+                        if (line.indexOf("<br><br>") > -1)
+                            line = line.replaceAll("<br>", "\n");
                         if (line.indexOf("<br>") > -1)
                             line = line.replaceAll("<br>", "\n");
                         medicine.setUsage(line);
