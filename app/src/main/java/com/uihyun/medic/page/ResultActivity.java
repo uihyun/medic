@@ -121,7 +121,7 @@ public class ResultActivity extends Activity {
         protected Void doInBackground(Void... voids) {
 
             InputStream is = null;
-            bitmaps = new ArrayList<Bitmap>();
+            bitmaps = new ArrayList<>();
             try {
                 if (medicine.getImageUrl() != null) {
                     URL imageUrl = new URL(medicine.getImageUrl());
@@ -171,15 +171,15 @@ public class ResultActivity extends Activity {
                         br.readLine();
                         line = br.readLine();
                         line = line.substring(line.indexOf("break-all") + 12);
-                        if (line.indexOf("</td>") > -1)
+                        if (line.lastIndexOf("</td>") > -1)
                             line = line.substring(0, line.indexOf("</td>"));
                         if (line.lastIndexOf("<TABLE") > -1)
                             line = line.substring(0, line.lastIndexOf("<TABLE") - 4);
-                        if (line.indexOf("&nbsp;") > -1)
+                        if (line.contains("&nbsp;"))
                             line = line.replaceAll("&nbsp;", " ");
-                        if (line.indexOf("<br><br>") > -1)
+                        if (line.contains("<br><br>"))
                             line = line.replaceAll("<br><br>", "\n");
-                        if (line.indexOf("<br>") > -1)
+                        if (line.contains("<br>"))
                             line = line.replaceAll("<br>", "\n");
                         medicine.setUsage(line);
                         break;
