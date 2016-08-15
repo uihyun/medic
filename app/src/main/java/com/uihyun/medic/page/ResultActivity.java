@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class ResultActivity extends Activity {
     private AsyncPostData asyncPostData;
     private Medicine medicine;
 
+    private Button favoriteButton;
     private TextView nameTextView;
     private TextView descTextView;
     private ImageView resultImageView;
@@ -58,6 +61,7 @@ public class ResultActivity extends Activity {
         Intent intent = getIntent();
         medicine = (Medicine) intent.getSerializableExtra("medicine");
 
+        favoriteButton = (Button) findViewById(R.id.add_favorite);
         nameTextView = (TextView) findViewById(R.id.result_name);
         descTextView = (TextView) findViewById(R.id.result_desc);
         resultImageView = (ImageView) findViewById(R.id.result_image);
@@ -79,6 +83,13 @@ public class ResultActivity extends Activity {
         guideUsageContent = (TextView) findViewById(R.id.guide_usage_content);
         guideStore = (TextView) findViewById(R.id.guide_store);
         guideStoreContent = (TextView) findViewById(R.id.guide_store_content);
+
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View button) {
+                // set the state of button
+                button.setSelected(!button.isSelected());
+            }
+        });
 
         asyncPostData = new AsyncPostData(this, medicine);
         asyncPostData.execute();
