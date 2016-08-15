@@ -1,4 +1,4 @@
-package com.uihyun.medic;
+package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.uihyun.medic.list.ListViewAdapter;
+import com.uihyun.medic.Medicine;
+import com.uihyun.medic.R;
 
 import java.util.ArrayList;
 import java.util.List;

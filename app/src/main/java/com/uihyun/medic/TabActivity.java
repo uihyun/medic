@@ -9,6 +9,12 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.TabHost;
 
+import com.uihyun.medic.page.AboutActivity;
+import com.uihyun.medic.page.FavoriteActivity;
+import com.uihyun.medic.page.IndgActivity;
+import com.uihyun.medic.page.MainActivity;
+import com.uihyun.medic.page.ShapeActivity;
+
 /**
  * Created by Uihyun on 2016. 6. 12..
  */

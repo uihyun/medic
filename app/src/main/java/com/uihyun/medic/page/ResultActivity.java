@@ -1,4 +1,4 @@
-package com.uihyun.medic;
+package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.uihyun.medic.CustomProgressDialog;
+import com.uihyun.medic.Medicine;
+import com.uihyun.medic.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

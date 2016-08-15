@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context="com.uihyun.medic.FavoriteActivity">
+    tools:context=".page.FavoriteActivity">
 
     <ListView
         android:layout_width="match_parent"

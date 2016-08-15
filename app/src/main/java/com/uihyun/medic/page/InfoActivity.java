@@ -1,9 +1,11 @@
-package com.uihyun.medic;
+package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.uihyun.medic.R;
 
 public class InfoActivity extends Activity {
 

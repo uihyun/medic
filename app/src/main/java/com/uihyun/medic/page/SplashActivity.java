@@ -1,10 +1,13 @@
-package com.uihyun.medic;
+package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
+
+import com.uihyun.medic.R;
+import com.uihyun.medic.TabActivity;
 
 public class SplashActivity extends Activity {
 

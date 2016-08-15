@@ -1,4 +1,4 @@
-package com.uihyun.medic;
+package com.uihyun.medic.list;
 
 import android.graphics.Bitmap;
 

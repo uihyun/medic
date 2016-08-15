@@ -1,4 +1,4 @@
-package com.uihyun.medic;
+package com.uihyun.medic.list;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.uihyun.medic.R;
 
 import java.util.ArrayList;
 

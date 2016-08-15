@@ -1,4 +1,4 @@
-package com.uihyun.medic;
+package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+
+import com.uihyun.medic.R;
 
 public class AboutActivity extends Activity {
 

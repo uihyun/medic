@@ -1,4 +1,4 @@
-package com.uihyun.medic;
+package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +18,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.uihyun.medic.CustomProgressDialog;
+import com.uihyun.medic.list.ListViewAdapter;
+import com.uihyun.medic.Medicine;
+import com.uihyun.medic.R;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
