@@ -10,11 +10,11 @@
     tools:context=".page.AboutActivity">
 
     <TextView
+        android:id="@+id/info_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textColor="#656565"
-        android:textSize="15dp"
-        android:id="@+id/info_detail"/>
+        android:textSize="15dp" />
 
 </LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- when selected -->
+    <item android:drawable="@drawable/favorite_button_selected" android:state_selected="true" />
+    <!-- when not selected -->
+    <item android:drawable="@drawable/favorite_button" android:state_selected="false" />
+</selector>

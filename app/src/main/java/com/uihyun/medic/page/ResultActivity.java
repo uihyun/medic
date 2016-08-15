@@ -86,10 +86,8 @@ public class ResultActivity extends Activity {
 
     public class AsyncPostData extends AsyncTask<Void, Void, Void> {
         private String strUrl;
-        private String resultUsageContent;
         private String resultWhatContent;
         private String resultHowContent;
-        private String resultStoreContent;
         private Context context;
         private Medicine medicine;
         private Bitmap bitmapMainImage;
@@ -169,7 +167,7 @@ public class ResultActivity extends Activity {
                         if (line.indexOf("&nbsp;") > -1)
                             line = line.replaceAll("&nbsp;", " ");
                         if (line.indexOf("<br><br>") > -1)
-                            line = line.replaceAll("<br>", "\n");
+                            line = line.replaceAll("<br><br>", "\n");
                         if (line.indexOf("<br>") > -1)
                             line = line.replaceAll("<br>", "\n");
                         medicine.setUsage(line);
@@ -283,8 +281,6 @@ public class ResultActivity extends Activity {
                 }
             }
 
-            guideWhat.setText(R.string.guide_usage);
-            guideWhatContent.setText(resultUsageContent);
             guideWhat.setText(R.string.guide_what);
             guideWhatContent.setText(resultWhatContent);
             guideHow.setText(R.string.guide_how);
