@@ -2,14 +2,22 @@ package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+import com.uihyun.medic.Medicine;
 import com.uihyun.medic.R;
 import com.uihyun.medic.TabActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SplashActivity extends Activity {
+
+    public static final List<Medicine> favoriteMedicineList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +28,21 @@ public class SplashActivity extends Activity {
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.splash));
 
         Handler hd = new Handler();
-        hd.postDelayed(new splashHandler(), 2000); // 3초 후에 Handler 실행
+        hd.postDelayed(new splashHandler(), 2000); // 2초 후에 Handler 실행
+
+        final SharedPreferences prefs = getSharedPreferences("favorite", MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        if (favoriteMedicineList.size() > 0)
+            favoriteMedicineList.clear();
+        Medicine medicine;
+        for (int i = 0; i < FavoriteActivity.FAVORITE_SIZE; i++) {
+            String json = prefs.getString("favorite." + i, null);
+            if (json != null) {
+                medicine = gson.fromJson(json, Medicine.class);
+                favoriteMedicineList.add(medicine);
+            }
+        }
     }
 
     private class splashHandler implements Runnable{

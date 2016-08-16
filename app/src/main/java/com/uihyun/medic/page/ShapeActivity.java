@@ -20,16 +20,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.uihyun.medic.CustomProgressDialog;
-import com.uihyun.medic.list.ListViewAdapter;
 import com.uihyun.medic.Medicine;
 import com.uihyun.medic.R;
+import com.uihyun.medic.list.ListViewAdapter;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -113,7 +112,7 @@ public class ShapeActivity extends Activity {
                 if (medicines.size() > position) {
                     // 결과 페이지로 이동
                     Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-                    intent.putExtra("medicine", (Serializable) medicines.get(position));
+                    intent.putExtra("medicine", medicines.get(position));
                     startActivity(intent);
                 } else {
                     adapter.removeListViewItem(position);
@@ -292,8 +291,7 @@ public class ShapeActivity extends Activity {
                     result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
                 else
                     result = medicines.size() + "개의 결과가 검색되었습니다.";
-            }
-            else
+            } else
                 result = "검색된 결과가 없습니다.";
 
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();

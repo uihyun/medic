@@ -3,6 +3,7 @@ package com.uihyun.medic.page;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.uihyun.medic.CustomProgressDialog;
 import com.uihyun.medic.Medicine;
 import com.uihyun.medic.R;
@@ -84,15 +86,56 @@ public class ResultActivity extends Activity {
         guideStore = (TextView) findViewById(R.id.guide_store);
         guideStoreContent = (TextView) findViewById(R.id.guide_store_content);
 
+        final SharedPreferences prefs = getSharedPreferences("favorite", MODE_PRIVATE);
+        for (int i = 0; i < SplashActivity.favoriteMedicineList.size(); i++) {
+            if (SplashActivity.favoriteMedicineList.get(i).getName().equals(medicine.getName()))
+                favoriteButton.setSelected(true);
+        }
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View button) {
                 // set the state of button
                 button.setSelected(!button.isSelected());
+                if (button.isSelected()) {
+                    addFavorite(prefs);
+                } else {
+                    removeFavorite(prefs);
+                }
             }
         });
 
         asyncPostData = new AsyncPostData(this, medicine);
         asyncPostData.execute();
+    }
+
+    private void addFavorite(SharedPreferences prefs) {
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(medicine);
+        for (int i = 0; i < FavoriteActivity.FAVORITE_SIZE; i++) {
+            if (prefs.getString("favorite." + i, null) == null) {
+                editor.putString("favorite." + i, json);
+                break;
+            }
+        }
+        editor.apply();
+        editor.commit();
+        SplashActivity.favoriteMedicineList.add(medicine);
+        if (FavoriteActivity.favoriteActivity != null)
+            FavoriteActivity.favoriteActivity.finish();
+    }
+
+    private void removeFavorite(SharedPreferences prefs) {
+        SharedPreferences.Editor editor = prefs.edit();
+        for (int i = 0; i < SplashActivity.favoriteMedicineList.size(); i++) {
+            if (SplashActivity.favoriteMedicineList.get(i).getName().equals(medicine.getName()))
+                editor.remove("favorite." + i);
+        }
+
+        editor.apply();
+        editor.commit();
+        SplashActivity.favoriteMedicineList.remove(medicine);
+        if (FavoriteActivity.favoriteActivity != null)
+            FavoriteActivity.favoriteActivity.finish();
     }
 
     public class AsyncPostData extends AsyncTask<Void, Void, Void> {
@@ -150,7 +193,10 @@ public class ResultActivity extends Activity {
                         strUrl = "http://www.health.kr/drug_info/basedrug/" + medicine.getGuideLink();
                     } else if (line.contains("저장방법")) {
                         line = br.readLine();
-                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf('<'));
+                        while (line.lastIndexOf("</td>") == -1) {
+                            line += br.readLine();
+                        }
+                        line = line.substring(line.indexOf('>') + 1, line.lastIndexOf("</td>"));
                         medicine.setStore(line);
 //                    } else if (line.contains("tabcon_effect") && !line.contains("changeTab")) {
 //                        br.readLine();
@@ -172,7 +218,7 @@ public class ResultActivity extends Activity {
                         line = br.readLine();
                         line = line.substring(line.indexOf("break-all") + 12);
                         if (line.lastIndexOf("</td>") > -1)
-                            line = line.substring(0, line.indexOf("</td>"));
+                            line = line.substring(0, line.lastIndexOf("</td>"));
                         if (line.lastIndexOf("<TABLE") > -1)
                             line = line.substring(0, line.lastIndexOf("<TABLE") - 4);
                         if (line.contains("&nbsp;"))
@@ -200,6 +246,7 @@ public class ResultActivity extends Activity {
 
                 while ((line = br.readLine()) != null) {
                     if (line.contains("li style")) {
+                        // XXX 앞선 페이지의 복약지도 쪽에서 가져오기
                         if (line.contains("images")) {
                             line = line.substring(line.indexOf("images") - 1, line.indexOf("alt") - 2);
                             URL imageUrl = new URL("http://www.health.kr" + line);

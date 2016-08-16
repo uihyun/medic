@@ -1,29 +1,39 @@
 package com.uihyun.medic.page;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.uihyun.medic.list.ListViewAdapter;
+import com.uihyun.medic.CustomProgressDialog;
 import com.uihyun.medic.Medicine;
 import com.uihyun.medic.R;
+import com.uihyun.medic.list.ListViewAdapter;
 
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.List;
 
 public class FavoriteActivity extends Activity {
 
-    protected List<Medicine> medicines;
+    public static final int FAVORITE_SIZE = 10;
+    public static Activity favoriteActivity;
+
+    private List<Medicine> medicines;
     private ListView listView;
     private ListViewAdapter adapter;
+    private AsyncPostData asyncPostData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
+        favoriteActivity = this;
 
         // Adapter 생성
         adapter = new ListViewAdapter();
@@ -38,17 +48,57 @@ public class FavoriteActivity extends Activity {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // 결과 페이지로 이동
                 Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-//                intent.putExtra("medicine", (Serializable) medicines.get(position));
+                intent.putExtra("medicine", medicines.get(position));
                 startActivity(intent);
             }
         });
 
-        // XXX 저장되어 있는 favorite medicines 불러오기. splash에서 아예 처음에 static으로 불러와둘까.
-        medicines = new ArrayList<>();
+        asyncPostData = new AsyncPostData(this);
+        asyncPostData.execute();
+    }
 
-        for (int i = 0; i < medicines.size(); i++) {
-            // XXX image를 bitmap으로 저장해볼까. serialized 처리 떄문에 그런데 알아보자
-            adapter.addItem(null, medicines.get(i).getName(), medicines.get(i).getIngredient() + "\n");
+    public class AsyncPostData extends AsyncTask<Void, Void, Void> {
+
+        private Context context;
+        private CustomProgressDialog progressDialog;
+
+        public AsyncPostData(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = CustomProgressDialog.show(context, "", false, null);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            URL imageUrl;
+            Bitmap image;
+            try {
+                List<Medicine> medicines = SplashActivity.favoriteMedicineList;
+                for (int i = 0; i < medicines.size(); i++) {
+                    // XXX image를 bitmap으로 저장해볼까. serialized 처리 떄문에 그런데 알아보자
+                    if (medicines.get(i).getImageUrl() != null) {
+                        imageUrl = new URL(medicines.get(i).getImageUrl());
+                        image = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+                        adapter.addItem(image, medicines.get(i).getName(), medicines.get(i).getIngredient());
+                    } else {
+                        adapter.addItem(null, medicines.get(i).getName(), medicines.get(i).getIngredient());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressDialog.dismiss();
+            listView.setSelectionAfterHeaderView();
         }
     }
 }

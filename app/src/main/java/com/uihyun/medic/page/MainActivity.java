@@ -16,16 +16,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.uihyun.medic.CustomProgressDialog;
-import com.uihyun.medic.list.ListViewAdapter;
 import com.uihyun.medic.Medicine;
 import com.uihyun.medic.R;
+import com.uihyun.medic.list.ListViewAdapter;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -59,7 +58,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // 결과 페이지로 이동
                 Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-                intent.putExtra("medicine", (Serializable) medicines.get(position));
+                intent.putExtra("medicine", medicines.get(position));
                 startActivity(intent);
             }
         });
