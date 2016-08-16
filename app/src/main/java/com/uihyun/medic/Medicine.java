@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by Uihyun on 2016. 5. 24..
  */
 public class Medicine implements Serializable {
+    private String id;
     private String name;
     private String ingredient;
     private String company;
@@ -21,12 +22,22 @@ public class Medicine implements Serializable {
     private String usage;
     private String effect;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getImageUrl() {
+        imageUrl = "http://www.pharm.or.kr/images/sb_photo/big3/" + getId() + ".jpg";
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public String getSmallImageUrl() {
+        imageUrl = "http://www.pharm.or.kr/images/sb_photo/small/" + getId() + "_s.jpg";
+        return imageUrl;
     }
 
     public String getName() {

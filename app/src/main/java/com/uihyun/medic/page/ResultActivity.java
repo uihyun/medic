@@ -166,7 +166,7 @@ public class ResultActivity extends Activity {
             InputStream is = null;
             bitmaps = new ArrayList<>();
             try {
-                if (medicine.getImageUrl() != null) {
+                if (medicine.getId() != null) {
                     URL imageUrl = new URL(medicine.getImageUrl());
                     bitmapMainImage = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
                 } else {

@@ -234,9 +234,8 @@ public class ShapeActivity extends Activity {
                         line = br.readLine();
                         if (line.contains("sbcode")) {
                             line = line.substring(line.indexOf("sbcode") + 7, line.indexOf("class") - 2);
-                            line = "http://www.pharm.or.kr/images/sb_photo/big3/" + line + ".jpg";
-                            medicine.setImageUrl(line);
-                            URL imageUrl = new URL(medicine.getImageUrl());
+                            medicine.setId(line);
+                            URL imageUrl = new URL(medicine.getSmallImageUrl());
                             image = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
                         } else {
 //                            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_image);

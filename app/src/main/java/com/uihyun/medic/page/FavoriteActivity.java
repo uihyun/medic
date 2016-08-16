@@ -75,18 +75,16 @@ public class FavoriteActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             URL imageUrl;
-            Bitmap image;
+            Bitmap image = null;
             try {
                 medicines = SplashActivity.favoriteMedicineList;
                 for (int i = 0; i < medicines.size(); i++) {
                     // XXX image를 bitmap으로 저장해볼까. serialized 처리 떄문에 그런데 알아보자
-                    if (medicines.get(i).getImageUrl() != null) {
-                        imageUrl = new URL(medicines.get(i).getImageUrl());
+                    if (medicines.get(i).getId() != null) {
+                        imageUrl = new URL(medicines.get(i).getSmallImageUrl());
                         image = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-                        adapter.addItem(image, medicines.get(i).getName(), medicines.get(i).getIngredient());
-                    } else {
-                        adapter.addItem(null, medicines.get(i).getName(), medicines.get(i).getIngredient());
                     }
+                    adapter.addItem(image, medicines.get(i).getName(), medicines.get(i).getIngredient());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
