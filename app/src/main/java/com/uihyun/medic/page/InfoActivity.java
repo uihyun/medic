@@ -28,6 +28,9 @@ public class InfoActivity extends Activity {
             case AboutActivity.ABOUT_FEEDBACK:
                 infoText.setText(R.string.about_feedback);
                 break;
+            case AboutActivity.ABOUT_VERSION:
+                infoText.setText(R.string.about_version);
+                break;
             default:
                 infoText.setText("");
         }
