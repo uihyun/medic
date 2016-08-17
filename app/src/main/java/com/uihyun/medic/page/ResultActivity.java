@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.uihyun.medic.CustomProgressDialog;
@@ -108,30 +109,37 @@ public class ResultActivity extends Activity {
     }
 
     private void addFavorite(SharedPreferences prefs) {
+        if (SplashActivity.favoriteMedicineList.size() == FavoriteActivity.FAVORITE_SIZE) {
+            Toast.makeText(this, "즐겨찾기가 가득 찼습니다.", Toast.LENGTH_SHORT).show();
+            favoriteButton.setSelected(!favoriteButton.isSelected());
+            return;
+        }
+
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(medicine);
         for (int i = 0; i < FavoriteActivity.FAVORITE_SIZE; i++) {
             if (prefs.getString("favorite." + i, null) == null) {
                 editor.putString("favorite." + i, json);
+                SplashActivity.favoriteMedicineList.add(medicine);
                 break;
             }
         }
         editor.apply();
         editor.commit();
-        SplashActivity.favoriteMedicineList.add(medicine);
     }
 
     private void removeFavorite(SharedPreferences prefs) {
         SharedPreferences.Editor editor = prefs.edit();
         for (int i = 0; i < SplashActivity.favoriteMedicineList.size(); i++) {
-            if (SplashActivity.favoriteMedicineList.get(i).getName().equals(medicine.getName()))
+            if (SplashActivity.favoriteMedicineList.get(i).getName().equals(medicine.getName())) {
                 editor.remove("favorite." + i);
+                SplashActivity.favoriteMedicineList.remove(i);
+                break;
+            }
         }
-
         editor.apply();
         editor.commit();
-        SplashActivity.favoriteMedicineList.remove(medicine);
     }
 
     public class AsyncPostData extends AsyncTask<Void, Void, Void> {
