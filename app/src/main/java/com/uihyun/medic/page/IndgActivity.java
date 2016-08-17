@@ -206,8 +206,6 @@ public class IndgActivity extends Activity {
                             medicine.setId(line);
                             URL imageUrl = new URL(medicine.getSmallImageUrl());
                             image = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-                        } else {
-//                            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_image);
                         }
 
                         medicines.add(medicine);

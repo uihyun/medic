@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
         }
     }
 
-    private class splashHandler implements Runnable{
+    private class splashHandler implements Runnable {
         public void run() {
             startActivity(new Intent(getApplication(), TabActivity.class)); // 로딩이 끝난후 이동할 Activity
             SplashActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거

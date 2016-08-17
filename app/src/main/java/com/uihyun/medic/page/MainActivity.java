@@ -205,9 +205,11 @@ public class MainActivity extends Activity {
                             medicine.setId(line);
                             URL imageUrl = new URL(medicine.getSmallImageUrl());
                             image = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-                        } else {
-//                            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_image);
                         }
+                        // XXX no image에 대한 image를 굳이 넣을 필요는 없겠지
+//                        else {
+//                            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_image);
+//                        }
 
                         medicines.add(medicine);
                         adapter.addItem(image, medicine.getName(), medicine.getIngredient());

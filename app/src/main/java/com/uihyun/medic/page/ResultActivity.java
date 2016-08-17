@@ -169,8 +169,6 @@ public class ResultActivity extends Activity {
                 if (medicine.getId() != null) {
                     URL imageUrl = new URL(medicine.getImageUrl());
                     bitmapMainImage = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-                } else {
-//                resultImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), getResources().getDrawable(R.drawable.no_image)));
                 }
 
                 URL url = new URL(strUrl);
@@ -246,7 +244,6 @@ public class ResultActivity extends Activity {
 
                 while ((line = br.readLine()) != null) {
                     if (line.contains("li style")) {
-                        // XXX 앞선 페이지의 복약지도 쪽에서 가져오기
                         if (line.contains("images")) {
                             line = line.substring(line.indexOf("images") - 1, line.indexOf("alt") - 2);
                             URL imageUrl = new URL("http://www.health.kr" + line);
