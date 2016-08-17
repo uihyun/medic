@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.uihyun.medic.CustomProgressDialog;
@@ -22,18 +23,17 @@ import java.util.List;
 public class FavoriteActivity extends Activity {
 
     public static final int FAVORITE_SIZE = 10;
-    public static Activity favoriteActivity;
 
     private List<Medicine> medicines;
     private ListView listView;
     private ListViewAdapter adapter;
+    private Button refreshButton;
     private AsyncPostData asyncPostData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-        favoriteActivity = this;
 
         // Adapter 생성
         adapter = new ListViewAdapter();
@@ -53,6 +53,17 @@ public class FavoriteActivity extends Activity {
             }
         });
 
+        refreshButton = (Button) findViewById(R.id.refresh_favorite);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View button) {
+                onStart();
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         asyncPostData = new AsyncPostData(this);
         asyncPostData.execute();
     }
@@ -69,6 +80,8 @@ public class FavoriteActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            if (adapter.getCount() > 0)
+                adapter.removeListViewItems();
             progressDialog = CustomProgressDialog.show(context, "", false, null);
         }
 

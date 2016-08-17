@@ -120,8 +120,6 @@ public class ResultActivity extends Activity {
         editor.apply();
         editor.commit();
         SplashActivity.favoriteMedicineList.add(medicine);
-        if (FavoriteActivity.favoriteActivity != null)
-            FavoriteActivity.favoriteActivity.finish();
     }
 
     private void removeFavorite(SharedPreferences prefs) {
@@ -134,8 +132,6 @@ public class ResultActivity extends Activity {
         editor.apply();
         editor.commit();
         SplashActivity.favoriteMedicineList.remove(medicine);
-        if (FavoriteActivity.favoriteActivity != null)
-            FavoriteActivity.favoriteActivity.finish();
     }
 
     public class AsyncPostData extends AsyncTask<Void, Void, Void> {

@@ -32,7 +32,10 @@ public class TabActivity extends Activity {
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
     private TabHost tabHost;
-    public GestureDetector.OnGestureListener mGestureListener = new GestureDetector.OnGestureListener() {
+    private LocalActivityManager mLocalActivityManager;
+    private String currentTab;
+    private GestureDetector gestureScanner;
+    private GestureDetector.OnGestureListener mGestureListener = new GestureDetector.OnGestureListener() {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
@@ -81,9 +84,6 @@ public class TabActivity extends Activity {
             return false;
         }
     };
-    private LocalActivityManager mLocalActivityManager;
-    private String currentTab;
-    private GestureDetector gestureScanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
