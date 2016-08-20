@@ -7,61 +7,87 @@
     android:orientation="vertical"
     tools:context=".page.ShapeActivity">
 
-    <Spinner
-        android:id="@+id/spinner_type"
+    <LinearLayout
+        android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp" />
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner_color"
+        <Spinner
+            android:id="@+id/spinner_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp" />
+
+        <Spinner
+            android:id="@+id/spinner_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp" />
+
+        <Spinner
+            android:id="@+id/spinner_shape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp" />
+
+        <Spinner
+            android:id="@+id/spinner_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/search_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/search_hint_shape"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/button_search" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/summary_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp" />
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner_shape"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp" />
-
-    <Spinner
-        android:id="@+id/spinner_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp" />
-
-    <EditText
-        android:id="@+id/search_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/search_hint_shape"
-        android:imeOptions="actionSearch"
-        android:inputType="text" />
-
-    <Button
-        android:id="@+id/button_search"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="@string/button_search" />
+        <TextView
+            android:id="@+id/summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#656565"
+            android:textSize="17dp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_view_shape"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp" />
-
 </LinearLayout>

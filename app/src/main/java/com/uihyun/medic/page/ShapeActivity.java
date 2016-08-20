@@ -15,8 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uihyun.medic.CustomProgressDialog;
@@ -43,6 +45,7 @@ public class ShapeActivity extends Activity {
     private Spinner shapeSpinner;
     private Spinner lineSpinner;
     private EditText searchText;
+    private TextView summaryText;
     private ListView listView;
     private ListViewAdapter adapter;
     private AsyncPostData asyncPostData;
@@ -105,6 +108,26 @@ public class ShapeActivity extends Activity {
         listView = (ListView) findViewById(R.id.list_view_shape);
         listView.setAdapter(adapter);
 
+        // summary of saerching shape
+        LinearLayout layout = (LinearLayout) findViewById(R.id.summary_layout);
+        layout.setVisibility(LinearLayout.GONE);
+        layout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.search_layout);
+                    layout.setVisibility(LinearLayout.VISIBLE);
+
+                    layout = (LinearLayout) findViewById(R.id.summary_layout);
+                    layout.setVisibility(LinearLayout.GONE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        summaryText = (TextView) findViewById(R.id.summary);
+
         // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -156,6 +179,15 @@ public class ShapeActivity extends Activity {
 
                     asyncPostData = new AsyncPostData(v.getContext());
                     asyncPostData.execute();
+
+                    if (summaryText.getText().length() != 0)
+                        summaryText.setText("");
+
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.search_layout);
+                    layout.setVisibility(LinearLayout.GONE);
+
+                    layout = (LinearLayout) findViewById(R.id.summary_layout);
+                    layout.setVisibility(LinearLayout.VISIBLE);
                     return true;
                 }
                 return false;
@@ -292,6 +324,18 @@ public class ShapeActivity extends Activity {
                 result = "검색된 결과가 없습니다.";
 
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+            if (searchText.getText().length() != 0)
+                summaryText.setText(typeSpinner.getSelectedItem().toString() + ", " +
+                        colorSpinner.getSelectedItem().toString() + ", " +
+                        shapeSpinner.getSelectedItem().toString() + ", " +
+                        lineSpinner.getSelectedItem().toString() + ", " +
+                        searchText.getText() + "\n클릭하면 검색창이 다시 나옵니다.");
+            else
+                summaryText.setText(typeSpinner.getSelectedItem().toString() + ", " +
+                        colorSpinner.getSelectedItem().toString() + ", " +
+                        shapeSpinner.getSelectedItem().toString() + ", " +
+                        lineSpinner.getSelectedItem().toString() + "\n클릭하면 검색창이 다시 나옵니다.");
+
 
             listView.setSelectionAfterHeaderView();
 
