@@ -34,11 +34,13 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     protected List<Medicine> medicines;
-    private String enteredText;
     private ListViewAdapter adapter;
     private EditText searchText;
     private ListView listView;
     private AsyncPostData asyncPostData;
+
+    private String enteredText;
+    private int pageNum = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +58,20 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // 결과 페이지로 이동
-                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-                intent.putExtra("medicine", medicines.get(position));
-                startActivity(intent);
+                if (medicines.size() > position) {
+                    // 결과 페이지로 이동
+                    Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                    intent.putExtra("medicine", medicines.get(position));
+                    startActivity(intent);
+                } else {
+                    adapter.removeListViewItem(position);
+                    hideKeyboard();
+                    enteredText = searchText.getText().toString();
+                    pageNum = pageNum + 1;
+
+                    asyncPostData = new AsyncPostData(v.getContext());
+                    asyncPostData.execute();
+                }
             }
         });
 
@@ -75,6 +87,7 @@ public class MainActivity extends Activity {
                                 adapter.removeListViewItems();
 
                             enteredText = searchText.getText().toString();
+                            pageNum = 1;
                             hideKeyboard();
                             if (enteredText != null && enteredText.length() != 0) {
                                 asyncPostData = new AsyncPostData(v.getContext());
@@ -100,6 +113,7 @@ public class MainActivity extends Activity {
         private String result;
         private Context context;
         private CustomProgressDialog progressDialog;
+        private boolean hasNextPage;
 
         public AsyncPostData(Context context) {
             this.context = context;
@@ -109,7 +123,7 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = CustomProgressDialog.show(context, "", false, null);
-            strUrl = "http://www.health.kr/drug_info/basedrug/list.asp";
+            strUrl = "http://www.health.kr/drug_info/basedrug/drug_list.asp";
         }
 
         @Override
@@ -129,7 +143,8 @@ public class MainActivity extends Activity {
                 StringBuffer sbPost = new StringBuffer();
                 sbPost.append("drug_name").append("=").append(URLEncoder.encode(enteredText, "EUC-KR")).append("&");
                 sbPost.append("sunb_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
-                sbPost.append("firm_name").append("=").append(URLEncoder.encode("", "EUC-KR"));
+                sbPost.append("firm_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
+                sbPost.append("_page").append("=").append(URLEncoder.encode(Integer.toString(pageNum), "EUC-KR"));
 
                 os = new DataOutputStream(conn.getOutputStream());
                 os.writeBytes(sbPost.toString());
@@ -214,6 +229,15 @@ public class MainActivity extends Activity {
                         medicines.add(medicine);
                         adapter.addItem(image, medicine.getName(), medicine.getIngredient());
                     }
+
+                    if (line.contains("icon_prev_img")) {
+                        while ((line = br.readLine()) != null) {
+                            if (line.contains("javascript:go_page")) {
+                                hasNextPage = true;
+                                break;
+                            }
+                        }
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -228,6 +252,9 @@ public class MainActivity extends Activity {
                 }
             }
 
+            if (hasNextPage)
+                adapter.addItem(null, "더 보기", null);
+
             return null;
         }
 
@@ -237,14 +264,23 @@ public class MainActivity extends Activity {
 
             progressDialog.dismiss();
 
-            if (medicines.size() > 0)
-                result = medicines.size() + "개의 결과가 검색되었습니다.";
-            else
+            if (medicines.size() > 0) {
+                if (hasNextPage) {
+                    if (pageNum != 1)
+                        result = medicines.size() + "개 이상의 결과가 더 검색되었습니다.";
+                    else
+                        result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
+                } else
+                    result = medicines.size() + "개의 결과가 검색되었습니다.";
+            } else
                 result = "검색된 결과가 없습니다.";
 
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
             listView.setSelectionAfterHeaderView();
+
+            if (pageNum != 1)
+                listView.setSelection(listView.getCount());
         }
     }
 }

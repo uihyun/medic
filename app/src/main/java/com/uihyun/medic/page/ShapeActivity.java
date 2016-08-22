@@ -287,8 +287,14 @@ public class ShapeActivity extends Activity {
                         adapter.addItem(image, medicine.getName(), medicine.getIngredient());
                     }
 
-                    if (line.contains("_page"))
-                        hasNextPage = true;
+                    if (line.contains("icon_prev_img")) {
+                        while ((line = br.readLine()) != null) {
+                            if (line.contains("javascript:go_page")) {
+                                hasNextPage = true;
+                                break;
+                            }
+                        }
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -316,9 +322,12 @@ public class ShapeActivity extends Activity {
             progressDialog.dismiss();
 
             if (medicines.size() > 0) {
-                if (hasNextPage)
-                    result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
-                else
+                if (hasNextPage) {
+                    if (pageNum != 1)
+                        result = medicines.size() + "개 이상의 결과가 더 검색되었습니다.";
+                    else
+                        result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
+                } else
                     result = medicines.size() + "개의 결과가 검색되었습니다.";
             } else
                 result = "검색된 결과가 없습니다.";
@@ -335,7 +344,6 @@ public class ShapeActivity extends Activity {
                         colorSpinner.getSelectedItem().toString() + ", " +
                         shapeSpinner.getSelectedItem().toString() + ", " +
                         lineSpinner.getSelectedItem().toString() + "\n클릭하면 검색창이 다시 나옵니다.");
-
 
             listView.setSelectionAfterHeaderView();
 

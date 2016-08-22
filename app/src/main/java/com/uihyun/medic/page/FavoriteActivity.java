@@ -22,7 +22,7 @@ import java.util.List;
 
 public class FavoriteActivity extends Activity {
 
-    public static final int FAVORITE_SIZE = 10;
+    public static final int FAVORITE_SIZE = 20;
 
     private List<Medicine> medicines;
     private ListView listView;
