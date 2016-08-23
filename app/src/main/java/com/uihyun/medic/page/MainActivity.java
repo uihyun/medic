@@ -54,6 +54,8 @@ public class MainActivity extends Activity {
         listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
 
+        medicines = new ArrayList<>();
+
         // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -130,7 +132,6 @@ public class MainActivity extends Activity {
         protected Void doInBackground(Void... voids) {
             DataOutputStream os = null;
             InputStream is = null;
-            medicines = new ArrayList<>();
             try {
                 URL url = new URL(strUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

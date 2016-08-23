@@ -128,6 +128,8 @@ public class ShapeActivity extends Activity {
 
         summaryText = (TextView) findViewById(R.id.summary);
 
+        medicines = new ArrayList<>();
+
         // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -222,7 +224,6 @@ public class ShapeActivity extends Activity {
         protected Void doInBackground(Void... voids) {
             DataOutputStream os = null;
             InputStream is = null;
-            medicines = new ArrayList<>();
             try {
                 URL url = new URL(strUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
