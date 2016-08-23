@@ -22,5 +22,5 @@
         \n자세한 정보는 아래 주소를 확인해주세요.
         \nhttp://www.health.kr/</string>
     <string name="about_feedback">Review로 Feedback을 남겨주세요.\n참고하도록 하겠습니다.\n\n이용해 주셔서 감사합니다.\n\n</string>
-    <string name="about_version">MeDic version 0.8.2</string>
+    <string name="about_version">MeDic version 0.8.3</string>
 </resources>
