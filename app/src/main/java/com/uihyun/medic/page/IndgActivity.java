@@ -33,7 +33,7 @@ import java.util.List;
 
 public class IndgActivity extends Activity {
 
-    protected List<Medicine> medicines;
+    private List<Medicine> medicines;
     private ListViewAdapter adapter;
     private EditText searchText;
     private ListView listView;
@@ -145,6 +145,9 @@ public class IndgActivity extends Activity {
                 sbPost.append("drug_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
                 sbPost.append("sunb_name").append("=").append(URLEncoder.encode(enteredText, "EUC-KR")).append("&");
                 sbPost.append("firm_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
+                sbPost.append("_c_tab").append("=").append(URLEncoder.encode("all_pro", "EUC-KR")).append("&");
+                sbPost.append("x").append("=").append(URLEncoder.encode("0", "EUC-KR")).append("&");
+                sbPost.append("y").append("=").append(URLEncoder.encode("0", "EUC-KR")).append("&");
                 sbPost.append("_page").append("=").append(URLEncoder.encode(Integer.toString(pageNum), "EUC-KR"));
 
                 os = new DataOutputStream(conn.getOutputStream());

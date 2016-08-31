@@ -33,7 +33,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    protected List<Medicine> medicines;
+    private List<Medicine> medicines;
     private ListViewAdapter adapter;
     private EditText searchText;
     private ListView listView;
@@ -145,6 +145,9 @@ public class MainActivity extends Activity {
                 sbPost.append("drug_name").append("=").append(URLEncoder.encode(enteredText, "EUC-KR")).append("&");
                 sbPost.append("sunb_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
                 sbPost.append("firm_name").append("=").append(URLEncoder.encode("", "EUC-KR")).append("&");
+                sbPost.append("_c_tab").append("=").append(URLEncoder.encode("all_pro", "EUC-KR")).append("&");
+                sbPost.append("x").append("=").append(URLEncoder.encode("0", "EUC-KR")).append("&");
+                sbPost.append("y").append("=").append(URLEncoder.encode("0", "EUC-KR")).append("&");
                 sbPost.append("_page").append("=").append(URLEncoder.encode(Integer.toString(pageNum), "EUC-KR"));
 
                 os = new DataOutputStream(conn.getOutputStream());
@@ -158,11 +161,13 @@ public class MainActivity extends Activity {
                 String hrefLine;
 
                 while ((line = br.readLine()) != null) {
-                    if (line.contains("<font color='red'>" + enteredText)) {
+                    if (line.contains("show_detail")) {
                         Medicine medicine = new Medicine();
                         // 링크
                         hrefLine = line.substring(line.indexOf("show_"), line.indexOf('>', line.indexOf('>') + 1) - 1);
                         medicine.setDetailLink(hrefLine);
+                        if (hrefLine.contains("btn_pop_img"))
+                            continue;
 
                         // 제품명
                         line = line.substring(line.indexOf('>', line.indexOf('>') + 1) + 1, line.indexOf("</A>"));
@@ -253,8 +258,9 @@ public class MainActivity extends Activity {
                 }
             }
 
-            if (hasNextPage)
+            if (hasNextPage) {
                 adapter.addItem(null, "더 보기", null);
+            }
 
             return null;
         }

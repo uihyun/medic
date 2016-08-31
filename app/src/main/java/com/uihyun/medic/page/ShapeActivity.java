@@ -39,7 +39,7 @@ import java.util.List;
 
 public class ShapeActivity extends Activity {
 
-    protected List<Medicine> medicines;
+    private List<Medicine> medicines;
     private Spinner typeSpinner;
     private Spinner colorSpinner;
     private Spinner shapeSpinner;
@@ -240,6 +240,9 @@ public class ShapeActivity extends Activity {
                 sbPost.append("drug_color").append("=").append(URLEncoder.encode(enteredColor, "EUC-KR")).append("&");
                 sbPost.append("drug_shape").append("=").append(URLEncoder.encode(enteredShape, "EUC-KR")).append("&");
                 sbPost.append("drug_line").append("=").append(URLEncoder.encode(enteredLine, "EUC-KR")).append("&");
+                sbPost.append("_c_tab").append("=").append(URLEncoder.encode("all_pro", "EUC-KR")).append("&");
+                sbPost.append("x").append("=").append(URLEncoder.encode("0", "EUC-KR")).append("&");
+                sbPost.append("y").append("=").append(URLEncoder.encode("0", "EUC-KR")).append("&");
                 sbPost.append("_page").append("=").append(URLEncoder.encode(Integer.toString(pageNum), "EUC-KR"));
 
                 os = new DataOutputStream(conn.getOutputStream());
