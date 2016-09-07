@@ -24,6 +24,9 @@
         \n자세한 정보는 아래 사이트에서 확인해주세요.
         \n\n약학정보원
         \nhttp://www.health.kr/</string>
-    <string name="about_feedback">Review로 Feedback을 남겨주세요.\n참고하도록 하겠습니다.\n\n이용해 주셔서 감사합니다.\n\n</string>
+    <string name="about_feedback">Review로 Feedback을 남겨주세요.
+        \n참고하도록 하겠습니다.
+        \n\n이용해 주셔서 감사합니다.\n\n
+        <a href='https://play.google.com/store/apps/details?id=com.uihyun.medic'>Review 남기러</a></string>
     <string name="about_version">MeDic version 1.0.0</string>
 </resources>

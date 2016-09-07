@@ -33,6 +33,7 @@ public class InfoActivity extends Activity {
                 break;
             default:
                 infoText.setText("");
+                break;
         }
     }
 }
