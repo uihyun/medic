@@ -172,7 +172,23 @@
                 android:id="@+id/guide_store_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:textColor="#656565"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/guide_ref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="#656565"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/guide_ref_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:autoLink="web"
                 android:textColor="#656565"
                 android:textSize="18dp" />
         </LinearLayout>

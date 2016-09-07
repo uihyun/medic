@@ -55,6 +55,8 @@ public class ResultActivity extends Activity {
     private TextView guideUsageContent;
     private TextView guideStore;
     private TextView guideStoreContent;
+    private TextView guideRef;
+    private TextView guideRefContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,8 @@ public class ResultActivity extends Activity {
         guideUsageContent = (TextView) findViewById(R.id.guide_usage_content);
         guideStore = (TextView) findViewById(R.id.guide_store);
         guideStoreContent = (TextView) findViewById(R.id.guide_store_content);
+        guideRef = (TextView) findViewById(R.id.guide_ref);
+        guideRefContent = (TextView) findViewById(R.id.guide_ref_content);
 
         final SharedPreferences prefs = getSharedPreferences("favorite", MODE_PRIVATE);
         for (int i = 0; i < SplashActivity.favoriteMedicineList.size(); i++) {
@@ -348,6 +352,8 @@ public class ResultActivity extends Activity {
             guideUsageContent.setText(medicine.getUsage());
             guideStore.setText(R.string.guide_store);
             guideStoreContent.setText(medicine.getStore());
+            guideRef.setText(R.string.guide_ref);
+            guideRefContent.setText(R.string.guide_ref_content);
         }
     }
 }
