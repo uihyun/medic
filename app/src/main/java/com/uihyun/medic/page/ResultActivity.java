@@ -28,6 +28,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Uihyun on 2016. 9. 23..
+ */
 public class ResultActivity extends Activity {
 
     private AsyncPostData asyncPostData;

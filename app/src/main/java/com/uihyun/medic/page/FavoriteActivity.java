@@ -20,6 +20,9 @@ import com.uihyun.medic.list.ListViewAdapter;
 import java.net.URL;
 import java.util.List;
 
+/**
+ * Created by Uihyun on 2016. 9. 23..
+ */
 public class FavoriteActivity extends Activity {
 
     public static final int FAVORITE_SIZE = 20;

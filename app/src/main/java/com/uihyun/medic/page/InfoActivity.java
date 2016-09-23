@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import com.uihyun.medic.R;
 
+/**
+ * Created by Uihyun on 2016. 9. 23..
+ */
 public class InfoActivity extends Activity {
 
     private TextView infoText;

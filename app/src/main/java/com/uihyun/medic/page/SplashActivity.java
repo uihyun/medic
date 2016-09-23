@@ -15,6 +15,9 @@ import com.uihyun.medic.TabActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Uihyun on 2016. 9. 23..
+ */
 public class SplashActivity extends Activity {
 
     public static final List<Medicine> favoriteMedicineList = new ArrayList<>();

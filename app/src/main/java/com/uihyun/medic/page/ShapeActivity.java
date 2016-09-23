@@ -37,6 +37,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Uihyun on 2016. 9. 23..
+ */
 public class ShapeActivity extends Activity {
 
     private List<Medicine> medicines;
