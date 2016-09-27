@@ -3,6 +3,7 @@ package com.uihyun.medic.page;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import com.uihyun.medic.R;
@@ -20,6 +21,7 @@ public class InfoActivity extends Activity {
         setContentView(R.layout.activity_info);
 
         infoText = (TextView) findViewById(R.id.info_detail);
+        infoText.setMovementMethod(LinkMovementMethod.getInstance());
 
         Intent intent = getIntent();
         int idxAbout = (int) intent.getSerializableExtra("about");
