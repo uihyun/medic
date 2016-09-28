@@ -219,6 +219,8 @@ public class ShapeActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            if (medicines != null)
+                medicines.clear();
             progressDialog = CustomProgressDialog.show(context, "", false, null);
             strUrl = "http://www.health.kr/drug_info/sb/list.asp";
         }
