@@ -2,6 +2,7 @@ package com.uihyun.medic.page;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
@@ -34,7 +35,11 @@ public class InfoActivity extends Activity {
                 infoText.setText(R.string.about_feedback);
                 break;
             case AboutActivity.ABOUT_VERSION:
-                infoText.setText(R.string.about_version);
+                try {
+                    infoText.setText(getString(R.string.about_version) + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 infoText.setText("");
