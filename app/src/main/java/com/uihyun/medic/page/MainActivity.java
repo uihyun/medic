@@ -127,8 +127,6 @@ public class MainActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if (medicines != null)
-                medicines.clear();
             progressDialog = CustomProgressDialog.show(context, "", false, null);
             strUrl = "http://www.health.kr/drug_info/basedrug/drug_list.asp";
         }
@@ -278,16 +276,15 @@ public class MainActivity extends Activity {
 
             if (medicines.size() > 0) {
                 if (hasNextPage) {
-                    if (pageNum != 1)
-                        result = medicines.size() + "개 이상의 결과가 더 검색되었습니다.";
-                    else
+                    if (pageNum == 1)
                         result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
                 } else
                     result = medicines.size() + "개의 결과가 검색되었습니다.";
             } else
                 result = "검색된 결과가 없습니다.";
 
-            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+            if (!hasNextPage || pageNum == 1)
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
             listView.setSelectionAfterHeaderView();
 
