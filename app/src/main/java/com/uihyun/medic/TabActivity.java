@@ -128,7 +128,7 @@ public class TabActivity extends Activity {
         spec = tabHost.newTabSpec(TAB_FAVORITE).setContent(new Intent(this, FavoriteActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_favorite_selector));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec(TAB_ABOUT).setContent(new Intent(this, AboutActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_about_selected));
+        spec = tabHost.newTabSpec(TAB_ABOUT).setContent(new Intent(this, AboutActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_about_selector));
         tabHost.addTab(spec);
 
         setTabColor(tabHost);
@@ -137,9 +137,9 @@ public class TabActivity extends Activity {
 
     private void setTabColor(TabHost tabHost) {
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#FFFFFF"));
+            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#F2F2F2"));
         }
-        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#F0F0F0"));
+        tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#F2F2F2"));
     }
 
     private void setTabAction(final TabHost tabHost) {
@@ -147,9 +147,9 @@ public class TabActivity extends Activity {
             public void onTabChanged(String arg) {
                 // tab select action
                 for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#F2F2F2"));
                 }
-                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#F0F0F0"));
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#F2F2F2"));
             }
         });
     }

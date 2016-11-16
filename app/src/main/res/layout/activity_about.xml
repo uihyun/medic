@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context=".page.AboutActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#FFFFFF"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              tools:context=".page.AboutActivity">
 
     <TextView
         android:id="@+id/info_text"
@@ -17,14 +17,14 @@
         android:layout_marginTop="50dp"
         android:text="@string/about"
         android:textColor="#656565"
-        android:textSize="20dp" />
+        android:textSize="20dp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/darker_gray"/>
 
     <TextView
         android:id="@+id/feedback_text"
@@ -34,14 +34,14 @@
         android:layout_marginTop="50dp"
         android:text="@string/feedback"
         android:textColor="#656565"
-        android:textSize="20dp" />
+        android:textSize="20dp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/darker_gray"/>
 
     <TextView
         android:id="@+id/version_text"
@@ -51,12 +51,12 @@
         android:layout_marginTop="50dp"
         android:text="@string/version"
         android:textColor="#656565"
-        android:textSize="20dp" />
+        android:textSize="20dp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/darker_gray"/>
 </LinearLayout>

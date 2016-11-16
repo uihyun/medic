@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".page.ResultActivity">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            tools:context=".page.ResultActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,13 +14,13 @@
 
         <Button
             android:id="@+id/add_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="38dp"
+            android:layout_height="32dp"
             android:layout_gravity="right"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_favorite_selector" />
+            android:background="@drawable/button_favorite_selector"/>
 
         <TextView
             android:id="@+id/result_name"
@@ -30,7 +30,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:textColor="#656565"
-            android:textSize="30dp" />
+            android:textSize="30dp"/>
 
         <TextView
             android:id="@+id/result_desc"
@@ -39,7 +39,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textColor="#656565"
-            android:textSize="20dp" />
+            android:textSize="20dp"/>
 
         <ImageView
             android:id="@+id/result_image"
@@ -48,7 +48,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -61,22 +61,22 @@
             <ImageView
                 android:id="@+id/guide_0"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/guide_1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/guide_2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/guide_3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -89,22 +89,22 @@
             <ImageView
                 android:id="@+id/guide_4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/guide_5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/guide_6"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/guide_7"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -121,14 +121,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColor="#656565"
-                android:textSize="25dp" />
+                android:textSize="25dp"/>
 
             <TextView
                 android:id="@+id/guide_usage_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#656565"
-                android:textSize="18dp" />
+                android:textSize="18dp"/>
 
             <TextView
                 android:id="@+id/guide_what"
@@ -136,14 +136,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColor="#656565"
-                android:textSize="25dp" />
+                android:textSize="25dp"/>
 
             <TextView
                 android:id="@+id/guide_what_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#656565"
-                android:textSize="18dp" />
+                android:textSize="18dp"/>
 
             <TextView
                 android:id="@+id/guide_how"
@@ -151,14 +151,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColor="#656565"
-                android:textSize="25dp" />
+                android:textSize="25dp"/>
 
             <TextView
                 android:id="@+id/guide_how_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#656565"
-                android:textSize="18dp" />
+                android:textSize="18dp"/>
 
             <TextView
                 android:id="@+id/guide_store"
@@ -166,14 +166,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColor="#656565"
-                android:textSize="25dp" />
+                android:textSize="25dp"/>
 
             <TextView
                 android:id="@+id/guide_store_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#656565"
-                android:textSize="18dp" />
+                android:textSize="18dp"/>
 
             <TextView
                 android:id="@+id/guide_ref"
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColor="#656565"
-                android:textSize="25dp" />
+                android:textSize="25dp"/>
 
             <TextView
                 android:id="@+id/guide_ref_content"
@@ -190,7 +190,7 @@
                 android:layout_marginBottom="30dp"
                 android:autoLink="web"
                 android:textColor="#656565"
-                android:textSize="18dp" />
+                android:textSize="18dp"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
