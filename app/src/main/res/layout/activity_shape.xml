@@ -20,7 +20,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            android:theme="@android:style/Theme.Holo.Light"/>
 
         <Spinner
             android:id="@+id/spinner_color"
@@ -28,7 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            android:theme="@android:style/Theme.Holo.Light"/>
 
         <Spinner
             android:id="@+id/spinner_shape"
@@ -36,7 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            android:theme="@android:style/Theme.Holo.Light"/>
 
         <Spinner
             android:id="@+id/spinner_line"
@@ -44,7 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            android:theme="@android:style/Theme.Holo.Light"/>
 
         <EditText
             android:id="@+id/search_text"
