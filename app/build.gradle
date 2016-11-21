@@ -8,8 +8,8 @@ android {
         applicationId "com.uihyun.medic"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 6
+        versionName "1.0.5"
     }
     buildTypes {
         release {
@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.android.gms:play-services:6.1.71'
 }

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.uihyun.medic.Medicine;
 import com.uihyun.medic.R;
-import com.uihyun.medic.TabActivity;
+import com.uihyun.medic.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class SplashActivity extends Activity {
 
     private class splashHandler implements Runnable {
         public void run() {
-            startActivity(new Intent(getApplication(), TabActivity.class)); // 로딩이 끝난후 이동할 Activity
+            startActivity(new Intent(getApplication(), MainActivity.class)); // 로딩이 끝난후 이동할 Activity
             SplashActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
         }
     }

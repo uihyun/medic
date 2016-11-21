@@ -9,16 +9,19 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.TabHost;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.uihyun.medic.page.AboutActivity;
 import com.uihyun.medic.page.FavoriteActivity;
 import com.uihyun.medic.page.IndgActivity;
-import com.uihyun.medic.page.MainActivity;
+import com.uihyun.medic.page.NameActivity;
 import com.uihyun.medic.page.ShapeActivity;
 
 /**
  * Created by Uihyun on 2016. 6. 12..
  */
-public class TabActivity extends Activity {
+public class MainActivity extends Activity {
 
     private static final String CURRENT_TAB = "CURRENT_TAB";
     private static final String TAB_NAME = "TAB_NAME";
@@ -86,9 +89,21 @@ public class TabActivity extends Activity {
     };
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab);
+        setContentView(R.layout.activity_main);
 
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         mLocalActivityManager = new LocalActivityManager(this, false);
@@ -106,6 +121,10 @@ public class TabActivity extends Activity {
         }
 
         gestureScanner = new GestureDetector(this, mGestureListener);
+
+        Tracker t = AppController.getInstance().getTracker(AppController.TrackerName.APP_TRACKER);
+        t.setScreenName("MainActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
     }
 
     @Override
@@ -116,7 +135,7 @@ public class TabActivity extends Activity {
     public void initializeTabs() {
         TabHost.TabSpec spec;
 
-        spec = tabHost.newTabSpec(TAB_NAME).setContent(new Intent(this, MainActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_name_selector));
+        spec = tabHost.newTabSpec(TAB_NAME).setContent(new Intent(this, NameActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_name_selector));
         tabHost.addTab(spec);
 
         spec = tabHost.newTabSpec(TAB_INDG).setContent(new Intent(this, IndgActivity.class)).setIndicator(null, getResources().getDrawable(R.drawable.tab_indg_selector));

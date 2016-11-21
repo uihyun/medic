@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Created by Uihyun on 2016. 9. 23..
  */
-public class MainActivity extends Activity {
+public class NameActivity extends Activity {
 
     private List<Medicine> medicines;
     private ListViewAdapter adapter;
@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_name);
 
         // Adapter 생성
         adapter = new ListViewAdapter();
