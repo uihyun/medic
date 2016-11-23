@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- when selected -->
-    <item android:drawable="@drawable/tab6_selected" android:state_selected="true"/>
+    <item android:drawable="@drawable/tab5_selected" android:state_selected="true"/>
     <!-- when not selected -->
-    <item android:drawable="@drawable/tab6_not_selected" android:state_selected="false"/>
+    <item android:drawable="@drawable/tab5_not_selected" android:state_selected="false"/>
 </selector>

@@ -69,13 +69,13 @@
 
         <Button
             android:id="@+id/button_search"
-            android:layout_width="380dp"
-            android:layout_height="45.99dp"
+            android:layout_width="350dp"
+            android:layout_height="50.91dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/find_button"/>
+            android:background="@drawable/search_button"/>
     </LinearLayout>
 
     <LinearLayout
