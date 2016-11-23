@@ -12,10 +12,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.uihyun.medic.dialog.CustomProgressDialog;
-import com.uihyun.medic.vo.Medicine;
 import com.uihyun.medic.R;
+import com.uihyun.medic.dialog.CustomProgressDialog;
 import com.uihyun.medic.list.ListViewAdapter;
+import com.uihyun.medic.vo.Medicine;
 
 import java.net.URL;
 import java.util.List;
