@@ -1,9 +1,11 @@
-package com.uihyun.medic;
+package com.uihyun.medic.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
+import com.uihyun.medic.R;
 
 /**
  * Created by Uihyun on 2016. 7. 29..

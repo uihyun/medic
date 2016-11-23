@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.uihyun.medic.CustomProgressDialog;
-import com.uihyun.medic.Medicine;
+import com.uihyun.medic.dialog.CustomProgressDialog;
+import com.uihyun.medic.vo.Medicine;
 import com.uihyun.medic.R;
 
 import java.io.BufferedReader;

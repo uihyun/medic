@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
-import com.uihyun.medic.Medicine;
+import com.uihyun.medic.vo.Medicine;
 import com.uihyun.medic.R;
 import com.uihyun.medic.MainActivity;
 

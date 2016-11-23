@@ -15,8 +15,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.uihyun.medic.CustomProgressDialog;
-import com.uihyun.medic.Medicine;
+import com.uihyun.medic.dialog.CustomProgressDialog;
+import com.uihyun.medic.vo.Medicine;
 import com.uihyun.medic.R;
 import com.uihyun.medic.list.ListViewAdapter;
 

@@ -21,8 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uihyun.medic.CustomProgressDialog;
-import com.uihyun.medic.Medicine;
+import com.uihyun.medic.dialog.CustomProgressDialog;
+import com.uihyun.medic.vo.Medicine;
 import com.uihyun.medic.R;
 import com.uihyun.medic.list.ListViewAdapter;
 
