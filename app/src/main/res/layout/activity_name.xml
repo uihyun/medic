@@ -7,7 +7,7 @@
               android:orientation="vertical"
               tools:context=".page.NameActivity">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/search_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:padding="10dp"/>
 
     <ListView
-        android:id="@+id/list_view"
+        android:id="@+id/list_view_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

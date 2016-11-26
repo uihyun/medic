@@ -3,15 +3,18 @@ package com.uihyun.medic.page;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,7 +41,7 @@ public class NameActivity extends Activity {
 
     private List<Medicine> medicines;
     private ListViewAdapter adapter;
-    private EditText searchText;
+    private AutoCompleteTextView searchText;
     private ListView listView;
     private AsyncPostData asyncPostData;
 
@@ -54,7 +57,7 @@ public class NameActivity extends Activity {
         adapter = new ListViewAdapter();
 
         // 리스트뷰 참조 및 Adapter달기
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.list_view_name);
         listView.setAdapter(adapter);
 
         medicines = new ArrayList<>();
@@ -80,11 +83,28 @@ public class NameActivity extends Activity {
             }
         });
 
-        searchText = (EditText) findViewById(R.id.search_text);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.autotext_item, R.id.autoCompleteItem, SplashActivity.searchedNameList.toArray(new String[0]));
+        searchText = (AutoCompleteTextView) findViewById(R.id.search_text);
+        searchText.setThreshold(0);
+        searchText.setAdapter(arrayAdapter);
+        searchText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (SplashActivity.searchedNameList.size() > 0) {
+                        searchText.showDropDown();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
         searchText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (medicines.size() > 0)
+                        medicines.clear();
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
@@ -111,6 +131,48 @@ public class NameActivity extends Activity {
     private void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void addSearchedText(String enteredText) {
+        SharedPreferences prefs = getSharedPreferences("searchedNameList", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // 중복이 있을 경우, 제일 앞 순서로 이동
+        for (int i = 0; i < SplashActivity.searchedNameList.size(); i++) {
+            if (SplashActivity.searchedNameList.get(i).equals(enteredText)) {
+                SplashActivity.searchedNameList.remove(i);
+                SplashActivity.searchedNameList.add(0, enteredText);
+                return;
+            }
+        }
+
+        // 중복은 없고 사이즈가 다 찼을 경우, 제일 뒤 순서 삭제 후 추가
+        if (SplashActivity.searchedNameList.size() == SplashActivity.SEARCHED_LIST_SIZE) {
+            for (int i = 0; i < SplashActivity.searchedNameList.size(); i++) {
+                String text = prefs.getString("name." + i, null);
+                if (text != null) {
+                    if (SplashActivity.searchedNameList.remove(SplashActivity.searchedNameList.size()).equals(text)) {
+                        editor.remove("name." + i);
+                        break;
+                    }
+                }
+            }
+            SplashActivity.searchedNameList.remove(SplashActivity.searchedNameList.size() - 1);
+            SplashActivity.searchedNameList.add(0, enteredText);
+            editor.apply();
+            editor.commit();
+        }
+
+        // 리스트에 추가
+        for (int i = 0; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
+            if (prefs.getString("name." + i, null) == null) {
+                editor.putString("name." + i, enteredText);
+                SplashActivity.searchedNameList.add(enteredText);
+                break;
+            }
+        }
+        editor.apply();
+        editor.commit();
     }
 
     public class AsyncPostData extends AsyncTask<Void, Void, Void> {
@@ -280,6 +342,7 @@ public class NameActivity extends Activity {
                         result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
                 } else
                     result = medicines.size() + "개의 결과가 검색되었습니다.";
+                addSearchedText(enteredText);
             } else
                 result = "검색된 결과가 없습니다.";
 

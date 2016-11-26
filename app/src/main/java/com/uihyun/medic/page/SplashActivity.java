@@ -20,7 +20,11 @@ import java.util.List;
  */
 public class SplashActivity extends Activity {
 
+    public static final int SEARCHED_LIST_SIZE = 10;
+
     public static final List<Medicine> favoriteMedicineList = new ArrayList<>();
+    public static final List<String> searchedNameList = new ArrayList<>();
+    public static final List<String> searchedIndgList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,8 @@ public class SplashActivity extends Activity {
         Handler hd = new Handler();
         hd.postDelayed(new splashHandler(), 2000); // 2초 후에 Handler 실행
 
-        final SharedPreferences prefs = getSharedPreferences("favorite", MODE_PRIVATE);
+        // favorite
+        SharedPreferences prefs = getSharedPreferences("favorite", MODE_PRIVATE);
         Gson gson = new Gson();
 
         if (favoriteMedicineList.size() > 0)
@@ -44,6 +49,30 @@ public class SplashActivity extends Activity {
             if (json != null) {
                 medicine = gson.fromJson(json, Medicine.class);
                 favoriteMedicineList.add(medicine);
+            }
+        }
+
+        // recently searched text - name
+        prefs = getSharedPreferences("searchedNameList", MODE_PRIVATE);
+
+        if (searchedNameList.size() > 0)
+            searchedNameList.clear();
+        for (int i = 0; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
+            String text = prefs.getString("name." + i, null);
+            if (text != null) {
+                searchedNameList.add(text);
+            }
+        }
+
+        // recently searched text - indg
+        prefs = getSharedPreferences("searchedIndgList", MODE_PRIVATE);
+
+        if (searchedIndgList.size() > 0)
+            searchedIndgList.clear();
+        for (int i = 0; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
+            String text = prefs.getString("indg." + i, null);
+            if (text != null) {
+                searchedIndgList.add(text);
             }
         }
     }

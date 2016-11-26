@@ -167,6 +167,8 @@ public class ShapeActivity extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (medicines.size() > 0)
+                        medicines.clear();
                     if (adapter.getCount() != 0)
                         adapter.removeListViewItems();
 
