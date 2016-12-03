@@ -93,7 +93,6 @@ public class IndgActivity extends Activity {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (SplashActivity.searchedIndgList.size() > 0) {
                         searchText.showDropDown();
-                        return true;
                     }
                 }
                 return false;
