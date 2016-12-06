@@ -57,7 +57,7 @@ public class SplashActivity extends Activity {
 
         if (searchedNameList.size() > 0)
             searchedNameList.clear();
-        for (int i = 0; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
+        for (int i = SEARCHED_LIST_SIZE - 1; i > -1; i--) {
             String text = prefs.getString("name." + i, null);
             if (text != null) {
                 searchedNameList.add(text);
@@ -69,7 +69,7 @@ public class SplashActivity extends Activity {
 
         if (searchedIndgList.size() > 0)
             searchedIndgList.clear();
-        for (int i = 0; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
+        for (int i = SEARCHED_LIST_SIZE - 1; i > -1; i--) {
             String text = prefs.getString("indg." + i, null);
             if (text != null) {
                 searchedIndgList.add(text);

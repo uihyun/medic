@@ -83,7 +83,8 @@ public class IndgActivity extends Activity {
             }
         });
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.autotext_item, R.id.autoCompleteItem, SplashActivity.searchedIndgList.toArray(new String[0]));
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.autotext_item,
+                R.id.autoCompleteItem, SplashActivity.searchedIndgList.toArray(new String[0]));
         searchText = (AutoCompleteTextView) findViewById(R.id.search_text);
         searchText.setThreshold(0);
         searchText.setAdapter(arrayAdapter);
@@ -145,31 +146,28 @@ public class IndgActivity extends Activity {
             }
         }
 
-        // 중복은 없고 사이즈가 다 찼을 경우, 제일 뒤 순서 삭제 후 추가
+        // 중복은 없고 사이즈가 다 찼을 경우, 제일 앞 순서 삭제 후 추가
         if (SplashActivity.searchedIndgList.size() == SplashActivity.SEARCHED_LIST_SIZE) {
-            for (int i = 0; i < SplashActivity.searchedNameList.size(); i++) {
-                String text = prefs.getString("indg." + i, null);
-                if (text != null) {
-                    if (SplashActivity.searchedNameList.remove(SplashActivity.searchedNameList.size()).equals(text)) {
-                        editor.remove("indg." + i);
-                        break;
-                    }
+            SplashActivity.searchedIndgList.remove(0);
+            SplashActivity.searchedIndgList.add(enteredText);
+            editor.remove("indg.0");
+            for (int i = 1; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
+                int j = i - 1;
+                editor.putString("indg." + j, prefs.getString("indg." + i, null));
+                if (i == SplashActivity.SEARCHED_LIST_SIZE - 1)
+                    editor.putString("indg." + i, enteredText);
+            }
+        } else {
+            // 리스트에 추가
+            for (int i = 0; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
+                if (prefs.getString("indg." + i, null) == null) {
+                    editor.putString("indg." + i, enteredText);
+                    SplashActivity.searchedIndgList.add(enteredText);
+                    break;
                 }
             }
-            SplashActivity.searchedNameList.remove(SplashActivity.searchedNameList.size() - 1);
-            SplashActivity.searchedNameList.add(0, enteredText);
-            editor.apply();
-            editor.commit();
         }
 
-        // 리스트에 추가
-        for (int i = 0; i < SplashActivity.SEARCHED_LIST_SIZE; i++) {
-            if (prefs.getString("indg." + i, null) == null) {
-                editor.putString("indg." + i, enteredText);
-                SplashActivity.searchedIndgList.add(enteredText);
-                break;
-            }
-        }
         editor.apply();
         editor.commit();
     }
@@ -335,7 +333,13 @@ public class IndgActivity extends Activity {
                         result = medicines.size() + "개 이상의 결과가 검색되었습니다.";
                 } else
                     result = medicines.size() + "개의 결과가 검색되었습니다.";
-                addSearchedText(enteredText);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        addSearchedText(enteredText);
+                    }
+                }).start();
             } else
                 result = "검색된 결과가 없습니다.";
 
