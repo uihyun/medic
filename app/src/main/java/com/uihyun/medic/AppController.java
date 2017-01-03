@@ -27,6 +27,7 @@ public class AppController extends Application {
             Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(PROPERTY_ID) :
                     (trackerId == TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(R.xml.global_tracker) :
                             analytics.newTracker(R.xml.ecommerce_tracker);
+            t.enableAdvertisingIdCollection(true);
             mTrackers.put(trackerId, t);
         }
         return mTrackers.get(trackerId);
