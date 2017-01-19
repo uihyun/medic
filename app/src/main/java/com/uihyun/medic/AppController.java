@@ -1,9 +1,8 @@
 package com.uihyun.medic;
 
-import android.app.Application;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.uihyun.lib.Application;
 
 import java.util.HashMap;
 

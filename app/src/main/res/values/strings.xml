@@ -27,4 +27,11 @@
         \n이용해 주셔서 감사합니다.\n\n
         <a href="https://play.google.com/store/apps/details?id=com.uihyun.medic">리뷰 남기러 가기</a></string>
     <string name="about_version">약먹자 버전 \</string>
+
+    <string name="fb_app_id">348639635507476</string>
+
+    <string name="crash_toast_text">에러가 발생하였습니다.</string>
+    <string name="crash_dialog_title">에러 발생 ㅠㅠ</string>
+    <string name="crash_dialog_text">관리자에 내용 전달해주시면 앱 개선에 도움이 됩니다.</string>
+    <string name="crash_dialog_ok_toast">감사합니다.</string>
 </resources>
